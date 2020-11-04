@@ -1,22 +1,55 @@
-@*
- * This template takes a single argument, a String containing a
- * message to display.
- *@
 @()
 
-@*
- * Call the `main` template with two arguments. The first
- * argument is a `String` with the title of the page, the second
- * argument is an `Html` object containing the body of the page.
- *@
 @main("Welcome to Tank") {
+    <h1>
+        <span style="font-size: 32px; font-weight: bold">
+            About Tank
+        </span>
+    </h1>
+    <p>
+        Tank is a artillery strategy game where two players battle against each other on a 2D landscape map. <br>
+        Each player has their own tank with 100 life points. Upon hitting the target the player loses 10 life points.
+        You win if the other player has 0 life points left.
+    </p>
+    <p>
+        The idea for the project came because there is another popular game called Shellshock live. <br>
+        This is much more complicated because there are many different weapons and items you can collect, <br>
+        but we wanted to implement our own version of this game. In our version there are only 2 Maps, <br>
+        no items to collect, no different weapons to choose from, but you can drive, shoot and enjoy the
+        good music while playing.
+    </p>
 
-    @*
-     * Get an `Html` object by calling the built-in Play welcome
-     * template and passing a `String` message.
-     * @welcome(message, style = "scala")
-     *@
+    <h1>
+        <span style="font-size: 32px; font-weight: bold">
+            Controls
+        </span>
+    </h1>
+    <p>
+        <ul>
+            <li>Moving to Left/Right: A/D </li>
+            <li>Changing shooting angle: W/A </li>
+            <li>Shooting power: +/- </li>
+            <li>Shooting: F </li>
+            <li>Spielerwechsel: P </li>
+        </ul>
+    </p>
 
-    <h1>About Tank</h1>
+    <h1>
+        <span style="font-size: 32px; font-weight: bold">
+            Main Page
+        </span>
+    </h1>
+    <p>
+        <img src=@routes.Assets.versioned("images/tank_mainpage.png")>
+    </p>
+
+    <h1>
+        <span style="font-size: 32px; font-weight: bold">
+            Game Example
+        </span>
+    </h1>
+    <p>
+        <img src=@routes.Assets.versioned("images/tank_gamepage1.png")>
+    </p>
 
 }

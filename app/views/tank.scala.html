@@ -1,0 +1,15 @@
+@import de.htwg.se.Tank.model.gameComponent.gameBase.Map.beginOfMap
+@import de.htwg.se.Tank.model.gameComponent.gameBase.Map.endOfMap
+@import de.htwg.se.Tank.model.gameComponent.gameBase.Map.toString
+@import de.htwg.se.Tank.model.gameComponent.gameBase.Map.shotList
+@import de.htwg.se.Tank.model.gameComponent.gameBase.Map.ListFX
+@import de.htwg.se.Tank.model.gameComponent.gameBase.Map.p1
+@import de.htwg.se.Tank.model.gameComponent.gameBase.Map.p2
+@(controller:de.htwg.se.Tank.controller.controllerComponent.ControllerInterface)
+
+
+@main("Tank") {
+    <pre>
+        @controller.gametoString
+    </pre>
+}
