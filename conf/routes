@@ -14,7 +14,7 @@ GET     /                           controllers.TankController.tank
 
 GET     /about                      controllers.TankController.about
 
-GET     /A                          controllers.TankController.moveleft
+GET     /A                          controllers.TankController.moveLeft
 
 GET     /D                          controllers.TankController.moveRight
 
@@ -25,6 +25,10 @@ GET     /W                          controllers.TankController.moveAngleUp
 GET     /S                          controllers.TankController.moveAngleDown
 
 GET     /P                          controllers.TankController.changePlayer
+
+GET     /R                          controllers.TankController.redo
+
+GET     /U                          controllers.TankController.undo
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

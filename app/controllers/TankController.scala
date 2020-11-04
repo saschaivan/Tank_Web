@@ -18,7 +18,7 @@ class TankController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(views.html.tank(gamecontroller))
   }
 
-  def moveleft = Action {
+  def moveLeft = Action {
     gamecontroller.moveLeft()
     Ok(views.html.tank(gamecontroller))
   }
@@ -47,5 +47,16 @@ class TankController @Inject()(cc: ControllerComponents) extends AbstractControl
     gamecontroller.changePlayer()
     Ok(views.html.tank(gamecontroller))
   }
+
+  def redo = Action {
+    gamecontroller.redo
+    Ok(views.html.tank(gamecontroller))
+  }
+
+  def undo = Action {
+    gamecontroller.undo
+    Ok(views.html.tank(gamecontroller))
+  }
+
 
 }

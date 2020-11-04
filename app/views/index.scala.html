@@ -1,6 +1,10 @@
 @()
 
 @main("Welcome to Tank") {
+    <form action="@controllers.routes.TankController.tank">
+        <input type="submit" value="Start Game"/>
+    </form>
+
     <h1>
         <span style="font-size: 32px; font-weight: bold">
             About Tank
