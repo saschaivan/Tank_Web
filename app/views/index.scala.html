@@ -1,12 +1,13 @@
 @()
 
 @main("Welcome to Tank") {
+    <link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/test.less")' />
     <form action="@controllers.routes.TankController.tank">
         <input type="submit" value="Start Game"/>
     </form>
 
     <h1>
-        <span style="font-size: 32px; font-weight: bold">
+        <span class="headertext">
             About Tank
         </span>
     </h1>
@@ -24,7 +25,7 @@
     </p>
 
     <h1>
-        <span style="font-size: 32px; font-weight: bold">
+        <span class="headertext">
             Controls
         </span>
     </h1>
@@ -39,7 +40,7 @@
     </p>
 
     <h1>
-        <span style="font-size: 32px; font-weight: bold">
+        <span class="headertext">
             Main Page
         </span>
     </h1>
@@ -48,7 +49,7 @@
     </p>
 
     <h1>
-        <span style="font-size: 32px; font-weight: bold">
+        <span class="headertext">
             Game Example
         </span>
     </h1>
