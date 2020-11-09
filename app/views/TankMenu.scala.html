@@ -1,0 +1,28 @@
+@()
+
+@main("Welcome to Tank") {
+    <html>
+        <link rel="stylesheet" type="text/css" href='@routes.Assets.versioned("stylesheets/menu.css")' />
+        <head>
+            <meta charset="UTF-8">
+            <title>Main Menu</title>
+        </head>
+        <body>
+            <div id="container">
+                <div class="Tank-header">
+                    <h1>
+                        Tank
+                    </h1>
+                </div>
+                <div class="buttons">
+                    <form method="get" action="game">
+                        <input type="submit" value="Start">
+                    </form>
+                    <form method="get" action="about">
+                        <input type="submit" value="about">
+                    </form>
+                </div>
+            </div>
+        </body>
+    </html>
+}

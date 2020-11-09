@@ -1,21 +1,19 @@
 @()
 
-@main("Welcome to Tank") {
-    <link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/test.less")' />
-    <form action="@controllers.routes.TankController.tank">
-        <input type="submit" value="Start Game"/>
-    </form>
-
+@main("About Tank") {
+    <link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/tank.css")' />
     <h1>
         <span class="headertext">
             About Tank
         </span>
     </h1>
+
     <p>
         Tank is a artillery strategy game where two players battle against each other on a 2D landscape map. <br>
         Each player has their own tank with 100 life points. Upon hitting the target the player loses 10 life points.
         You win if the other player has 0 life points left.
     </p>
+
     <p>
         The idea for the project came because there is another popular game called Shellshock live. <br>
         This is much more complicated because there are many different weapons and items you can collect, <br>
@@ -56,5 +54,4 @@
     <p>
         <img src=@routes.Assets.versioned("images/tank_gamepage1.png")>
     </p>
-
 }

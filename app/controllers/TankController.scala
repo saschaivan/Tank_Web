@@ -7,8 +7,11 @@ import de.htwg.se.Tank.model.gameComponent.gameBase.Map
 
 class TankController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
   val gamecontroller = Tank.controller
-  var map : Map.type = Map
   gamecontroller.setDefaultGame()
+
+  def menu = Action {
+    Ok(views.html.TankMenu())
+  }
 
   def about = Action {
     Ok(views.html.index())

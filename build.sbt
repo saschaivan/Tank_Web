@@ -32,3 +32,4 @@ libraryDependencies ++= Seq( jdbc , ehcache , ws , specs2 % Test , guice )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
 
+includeFilter in (Assets, LessKeys.less) := "tank.less"

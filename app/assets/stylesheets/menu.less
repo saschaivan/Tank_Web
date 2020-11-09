@@ -1,0 +1,78 @@
+body {
+  background-image: url("images/Game-Tank-Background-Free-Picture.jpg");
+  background-color: saddlebrown;
+}
+
+h1 {
+
+}
+
+input[type=submit] {
+  border: none;
+  background: none;
+  display: block;
+  font-size: 50px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: 'Press Start P2';
+  color: firebrick;
+  transform: perspective(200px) rotateX(10deg);
+  letter-spacing: .1em;
+  user-select: none;
+  text-shadow:
+            0 -1px 0 #000,
+          0 1px 0 #8f130d,
+          0 2px 0 #82110c,
+          0 3px 0 #7d100b,
+          0 4px 0 #750f0b,
+          0 5px 0 #6e0e0a,
+          0 6px 0 #630d09,
+          0 7px 0 #5c0c08,
+          0 8px 0 #540b08,
+          0 9px 0 #4d0a07,
+          0 10px 0 #470906,
+          0 11px 0 #3b0805,
+          0 12px 0 #330704,
+          0 13px 0 #290603,
+          0 14px 0 #240502,
+          0 15px 0 #1c0402;
+
+  transition: text-shadow .3s ease .3s,
+  transform .3s ease .3s,
+  letter-spacing .3s ease .3s;
+}
+
+.input[type=submit]:hover {
+  transition: text-shadow .33s ease,
+  transform .3s ease,
+  letter-spacing .3s ease;
+  text-shadow: 0 0 0 #5c0c08,
+  0 1px 0 #540b08,
+  0 2px 0 #4d0a07,
+  0 3px 3px rgba(0, 0, 0, 0.9);
+  transform: translate(0px, 15px)
+  perspective(200px)
+  rotateX(10deg);
+  letter-spacing: .125em;
+}
+
+#container {
+  width: 100px;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  display:flex;
+  font-weight: bold;
+}
+
+.Tank-header {
+  width: auto;
+  height: auto;
+  text-align: center;
+  padding:10px;
+}
+
+.buttons {
+
+}

@@ -1,17 +1,30 @@
+@import scalafx.scene.paint.Color.Green
 @(controller:de.htwg.se.Tank.controller.controllerComponent.ControllerInterface)
-
+@import de.htwg.se.Tank.model.gameComponent.gameBase.Map
+@import scalafx.scene.shape.{Circle, Polygon, Polyline, Rectangle}
+@import scala.collection.mutable.ListBuffer
+@import scala.collection.mutable
+@import de.htwg.se.Tank.aview.gui.MapGUI
+@map=@{Map.getFXList(true)}
 
 @main("Tank") {
-    <pre>
-        @controller.gametoString
-    </pre>
-
-    <form action="@controllers.routes.TankController.about">
-        <!-- <a href="@controllers.routes.TankController.about">About Tank</a> -->
-        <input type="submit" value="About"/>
-    </form>
-
-
+    <html>
+        <link rel="stylesheet" type="text/css" href='@routes.Assets.versioned("stylesheets/tank.css")' />
+        <body>
+            <div id="container">
+                <div class="game">
+                    <div class="map">
+                        <div class="map-shape">
+                                <!-- @{Polygon(map.map(_._1): _*)} -->
+                            <pre>
+                            @controller.gametoString
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+    </html>
 }
 
 
