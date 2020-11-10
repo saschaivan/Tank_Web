@@ -1,12 +1,16 @@
 package controllers
 
-import com.google.inject.Inject
+import com.google.inject.{Guice, Inject}
+import de.htwg.se.Tank.controller.controllerComponent.ControllerInterface
 import play.api.mvc.{AbstractController, ControllerComponents}
-import de.htwg.se.Tank.{Tank, controller}
+import de.htwg.se.Tank.{Tank, TankModule, controller}
 import de.htwg.se.Tank.model.gameComponent.gameBase.Map
+import javax.inject.Singleton
 
+@Singleton
 class TankController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
-  val gamecontroller = Tank.controller
+  val injector = Guice.createInjector(new TankModule)
+  val gamecontroller = injector.getInstance(classOf[ControllerInterface])
   gamecontroller.setDefaultGame()
 
   def menu = Action {

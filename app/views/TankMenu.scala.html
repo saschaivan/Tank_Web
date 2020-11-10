@@ -2,26 +2,44 @@
 
 @main("Welcome to Tank") {
     <html>
-        <link rel="stylesheet" type="text/css" href='@routes.Assets.versioned("stylesheets/menu.css")' />
         <head>
             <meta charset="UTF-8">
             <title>Main Menu</title>
+            <link rel="stylesheet" media="screen" type="text/css" href='@routes.Assets.versioned("stylesheets/menu.css")' />
         </head>
         <body>
-            <div id="container">
-                <div class="Tank-header">
-                    <h1>
-                        Tank
-                    </h1>
-                </div>
-                <div class="buttons">
-                    <form method="get" action="game">
-                        <input type="submit" value="Start">
-                    </form>
-                    <form method="get" action="about">
-                        <input type="submit" value="about">
-                    </form>
-                </div>
+            <div class="Tank-header">
+                <h1>
+                    Tank
+                </h1>
+            </div>
+            <div class="Name_and_Map">
+                <form>
+                    <label>
+                        Spieler 1: <input id="player1">
+                    </label>
+                    <br>
+                    <label>
+                        Spieler 2: <input id="player2">
+                    </label>
+                    <br>
+                    <label>
+                        Map: <select name="Map" size="3">
+                            <option selected>Wolfsschanze</option>
+                            <option>Gerade</option>
+                            <option>Sägezahnhügel</option>
+                        </select>
+                    </label>
+                </form>
+            </div>
+            <div class="buttons">
+                <form method="get" action="game">
+                    <input type="submit" value="Start">
+                </form>
+                <br>
+                <form method="get" action="about">
+                    <input type="submit" value="about">
+                </form>
             </div>
         </body>
     </html>

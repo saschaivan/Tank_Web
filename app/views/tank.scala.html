@@ -9,15 +9,24 @@
 
 @main("Tank") {
     <html>
-        <link rel="stylesheet" type="text/css" href='@routes.Assets.versioned("stylesheets/tank.css")' />
+        <link rel="stylesheet" media="screen" type="text/css" href='@routes.Assets.versioned("stylesheets/tank.css")' />
         <body>
             <div id="container">
+                <div class="controls">
+                    <ul>
+                        <li>Moving to Left/Right: A/D </li>
+                        <li>Changing shooting angle: W/A </li>
+                        <li>Shooting power: +/- </li>
+                        <li>Shooting: F </li>
+                        <li>Spielerwechsel: P </li>
+                    </ul>
+                </div>
                 <div class="game">
                     <div class="map">
                         <div class="map-shape">
                                 <!-- @{Polygon(map.map(_._1): _*)} -->
                             <pre>
-                            @controller.gametoString
+                                @controller.gametoString
                             </pre>
                         </div>
                     </div>
