@@ -25,28 +25,48 @@ body {
   padding-left: 30px;
 }
 
-.intro-image {
+#image-container {
   position: fixed;
   left: 50%;
-  height: 100%;
-  width: 640px;
-  margin-top: -700px;
-}
-
-.image-main {
-  background-image: url("../images/background_tank.jpg");
-  width: 100%;
+  margin-top: -650px;
+  width: 650px;
   height: 880px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position-x: 50%;
   background-position-y: center;
+  overflow: hidden;
 }
+
+#image-wrap {
+  animation: switch 5s ease-out infinite;
+}
+
+#image-wrap > img {
+  float: left;
+  width: 650px;
+  height: 880px;
+}
+@keyframes switch {
+  0%, 25% {
+    margin-left: 0;
+  }
+  35%, 60% {
+    margin-left: -650px;
+  }
+  70%, 100% {
+    margin-left: -1300px;
+  }
+}
+@keyframes img {
+  0% {opacity: 0;}
+  50% {opacity: 1;}
+}
+
 
 .brand {
   padding-left: 30px;
   padding-top: 150px;
-  border-right: 4px solid #000;
 }
 
 .title {
