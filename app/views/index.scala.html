@@ -1,57 +1,57 @@
 @()
 
-@main("About Tank") {
-    <link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/tank.css")' />
-    <h1>
-        <span class="headertext">
-            About Tank
-        </span>
-    </h1>
+    @main("About Tank") {
+        <html>
+            <head>
+                <link rel="stylesheet" media="screen" type="text/css" href='@routes.Assets.versioned("stylesheets/about.css")' />
+            </head>
+            <body>
+                <div class="container">
+                    <div class="intro-box">
+                        <h3 class="introduction">
+                            Tank is a artillery strategy game where two players battle against each other on a 2D landscape map. <br>
+                            Each player has their own tank with 100 life points. Upon hitting the target the player loses 10 life points.
+                            You win if the other player has 0 life points left.
+                        </h3>
 
-    <p>
-        Tank is a artillery strategy game where two players battle against each other on a 2D landscape map. <br>
-        Each player has their own tank with 100 life points. Upon hitting the target the player loses 10 life points.
-        You win if the other player has 0 life points left.
-    </p>
+                        <h3 class="introduction">
+                            The idea for the project came because there is another popular game called Shellshock live. <br>
+                            This is much more complicated because there are many different weapons and items you can collect, <br>
+                            but we wanted to implement our own version of this game. In our version there are only 2 Maps, <br>
+                            no items to collect, no different weapons to choose from, but you can drive, shoot and enjoy the
+                            good music while playing.
+                        </h3>
 
-    <p>
-        The idea for the project came because there is another popular game called Shellshock live. <br>
-        This is much more complicated because there are many different weapons and items you can collect, <br>
-        but we wanted to implement our own version of this game. In our version there are only 2 Maps, <br>
-        no items to collect, no different weapons to choose from, but you can drive, shoot and enjoy the
-        good music while playing.
-    </p>
+                        <div class="brand">
+                            <span class="title">
+                                Start Game!
+                            </span>
+                            <h3>About Tank</h3>
+                        </div>
 
-    <h1>
-        <span class="headertext">
-            Controls
-        </span>
-    </h1>
-    <p>
-        <ul>
-            <li>Moving to Left/Right: A/D </li>
-            <li>Changing shooting angle: W/A </li>
-            <li>Shooting power: +/- </li>
-            <li>Shooting: F </li>
-            <li>Spielerwechsel: P </li>
-        </ul>
-    </p>
+                        <div class="intro-image">
+                            <div class="image-main"></div>
+                        </div>
 
-    <h1>
-        <span class="headertext">
-            Main Page
-        </span>
-    </h1>
-    <p>
-        <img src=@routes.Assets.versioned("images/tank_mainpage.png")>
-    </p>
+                    </div>
 
-    <h1>
-        <span class="headertext">
-            Game Example
-        </span>
-    </h1>
-    <p>
-        <img src=@routes.Assets.versioned("images/tank_gamepage1.png")>
-    </p>
-}
+
+
+                    <div class="intro-box">
+                        <h1 class="control">
+                            <span class="title">
+                                Controls
+                            </span>
+                        </h1>
+                        <ul>
+                            <li>Moving to Left/Right: A/D </li>
+                            <li>Changing shooting angle: W/A </li>
+                            <li>Shooting power: +/- </li>
+                            <li>Shooting: F </li>
+                            <li>Spielerwechsel: P </li>
+                        </ul>
+                    </div>
+                </div>
+            </body>
+        </html>
+    }
