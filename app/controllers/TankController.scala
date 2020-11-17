@@ -65,5 +65,15 @@ class TankController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(views.html.tank(gamecontroller))
   }
 
+  def PowerPlus = Action {
+    gamecontroller.powerUp()
+    Ok(views.html.tank(gamecontroller))
+  }
+
+  def PowerMinus = Action {
+    gamecontroller.powerDown()
+    Ok(views.html.tank(gamecontroller))
+  }
+
 
 }

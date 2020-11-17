@@ -23,13 +23,18 @@
                         Spieler 2: <input id="player2">
                     </label>
                     <br>
-                    <label>
-                        Map: <select name="Map" size="3">
-                            <option selected>Wolfsschanze</option>
-                            <option>Gerade</option>
-                            <option>Sägezahnhügel</option>
-                        </select>
-                    </label>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                                id="dropdownMenuButton" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            Map
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <button class="dropdown-item" type="button">Wolfsschanze</button>
+                            <button class="dropdown-item" type="button">Gerade</button>
+                            <button class="dropdown-item" type="button">Sägezahnhügel</button>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="buttons">

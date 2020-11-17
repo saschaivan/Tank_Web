@@ -10,7 +10,22 @@
 @main("Tank") {
     <html>
         <link rel="stylesheet" media="screen" type="text/css" href='@routes.Assets.versioned("stylesheets/tank.css")' />
+        <script src='@routes.Assets.versioned("javascripts/bootstrap.min.js")'> </script>
         <body>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Tank</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
             <div id="container">
                 <div class="control-box">
                     <div class="controls">
@@ -55,6 +70,35 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
+            <div class="gameplay_buttons">
+                <form method="get">
+                    <button formaction="/game/A">
+                        Left
+                    </button>
+                    <button formaction="/game/D">
+                        Right
+                    </button>
+                    <button formaction="/game/W">
+                        Angle Up
+                    </button>
+                    <button formaction="/game/S">
+                        Angle Down
+                    </button>
+                    <button formaction="/game/+">
+                        Power +
+                    </button>
+                    <button formaction="/game/-">
+                        Power -
+                    </button>
+                    <button formaction="/game/F">
+                        Shooting
+                    </button>
+                    <button formaction="/game/P">
+                        Switch Player
+                    </button>
+                </form>
             </div>
         </body>
     </html>

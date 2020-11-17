@@ -6,9 +6,22 @@
             <link rel="stylesheet" media="screen" type="text/css" href='@routes.Assets.versioned("stylesheets/about.css")' />
         </head>
         <body>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Tank</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/game">Game <span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
             <div class="container">
                 <div class="intro-box">
-                    <button type="button" class="btn btn-default">Test Button</button>
                     <h3 class="introduction">
                         Tank is a artillery strategy game where two players battle against each other on a 2D landscape map. <br>
                         Each player has their own tank with 100 life points. Upon hitting the target the player loses 10 life points.
@@ -28,7 +41,7 @@
                     <div id="image-container">
                         <div class="image-wrap" id="image-wrap">
                             <img src="@routes.Assets.versioned("images/background_tank.jpg")" />
-                            <img src="@routes.Assets.versioned("images/tank_gamepage1.png")" />
+                            <img id="tank_background" src="@routes.Assets.versioned("images/tank_gamepage1.png")" />
                             <img src="@routes.Assets.versioned("images/background_tank.jpg")" />
                         </div>
                     </div>
