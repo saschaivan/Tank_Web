@@ -8,43 +8,52 @@
             <link rel="stylesheet" media="screen" type="text/css" href='@routes.Assets.versioned("stylesheets/menu.css")' />
         </head>
         <body>
-            <div class="Tank-header">
-                <h1>
-                    Tank
-                </h1>
-            </div>
-            <div class="Name_and_Map">
-                <form>
-                    <label>
-                        Spieler 1: <input id="player1">
-                    </label>
-                    <br>
-                    <label>
-                        Spieler 2: <input id="player2">
-                    </label>
-                    <br>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                id="dropdownMenuButton" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                            Map
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <button class="dropdown-item" type="button">Wolfsschanze</button>
-                            <button class="dropdown-item" type="button">Gerade</button>
-                            <button class="dropdown-item" type="button">Sägezahnhügel</button>
-                        </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 center-block Tank-header">
+                        <h1>
+                            Tank
+                        </h1>
                     </div>
-                </form>
-            </div>
-            <div class="buttons">
-                <form method="get" action="game">
-                    <input type="submit" value="Start">
-                </form>
-                <br>
-                <form method="get" action="about">
-                    <input type="submit" value="about">
-                </form>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 center-block Name_and_Map">
+                        <form>
+                            <div class="row">
+                                <div class="input-group mb-3 input-name">
+                                    <input type="text" class="form-control" placeholder="SPIELER 1" aria-label="SPIELER 1">
+                                    <input type="text" class="form-control" placeholder="SPIELER 2" aria-label="SPIELER 2">
+                                </div>
+
+                                <div class="col-md-2 center-block dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                        Map
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <button class="dropdown-item" type="button">Wolfsschanze</button>
+                                        <button class="dropdown-item" type="button">Gerade</button>
+                                        <button class="dropdown-item" type="button">Sägezahnhügel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 center-block buttons">
+                        <form method="get" action="game">
+                            <input type="submit" value="Start">
+                        </form>
+                        <br>
+                        <form method="get" action="about">
+                            <input type="submit" value="about">
+                        </form>
+                    </div>
+                </div>
             </div>
         </body>
     </html>
