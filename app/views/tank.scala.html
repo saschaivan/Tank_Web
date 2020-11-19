@@ -27,78 +27,82 @@
                 </div>
             </nav>
             <div id="container">
-                <div class="control-box">
-                    <div class="controls">
-                        <form>
-                            <label>
-                                Moving to Left/Right: <input value="A/D" size="2">
-                            </label>
-                        </form>
-                        <br>
-                        <form>
-                            <label>
-                                Changing shooting angle: <input value="W/S" size="2">
-                            </label>
-                        </form>
-                        <br>
-                        <form>
-                            <label>
-                                Shooting power: <input value="+/-" size="2">
-                            </label>
-                        </form>
-                        <br>
-                        <form>
-                            <label>
-                                Shooting: <input value="F" size="2">
-                            </label>
-                        </form>
-                        <br>
-                        <form>
-                            <label>
-                                Spielerwechsel: <input value="P" size="2">
-                            </label>
-                        </form>
-                    </div>
-                </div>
-                <div class="game">
-                    <div class="map">
-                        <div class="map-shape">
-                                <!-- @{Polygon(map.map(_._1): _*)} -->
-                            <pre>
-                                @controller.gametoString
-                            </pre>
+                <div class="row">
+                    <div class="col-3 control-box">
+                        <div class="controls">
+                            <form>
+                                <label>
+                                    Moving to Left/Right: <input value="A/D" size="2">
+                                </label>
+                            </form>
+                            <br>
+                            <form>
+                                <label>
+                                    Changing shooting angle: <input value="W/S" size="2">
+                                </label>
+                            </form>
+                            <br>
+                            <form>
+                                <label>
+                                    Shooting power: <input value="+/-" size="2">
+                                </label>
+                            </form>
+                            <br>
+                            <form>
+                                <label>
+                                    Shooting: <input value="F" size="2">
+                                </label>
+                            </form>
+                            <br>
+                            <form>
+                                <label>
+                                    Spielerwechsel: <input value="P" size="2">
+                                </label>
+                            </form>
                         </div>
                     </div>
-                </div>
 
-            </div>
-            <div class="gameplay_buttons">
-                <form method="get">
-                    <button formaction="/game/A">
-                        Left
-                    </button>
-                    <button formaction="/game/D">
-                        Right
-                    </button>
-                    <button formaction="/game/W">
-                        Angle Up
-                    </button>
-                    <button formaction="/game/S">
-                        Angle Down
-                    </button>
-                    <button formaction="/game/+">
-                        Power +
-                    </button>
-                    <button formaction="/game/-">
-                        Power -
-                    </button>
-                    <button formaction="/game/F">
-                        Shooting
-                    </button>
-                    <button formaction="/game/P">
-                        Switch Player
-                    </button>
-                </form>
+                    <div class="col-xl-9 game">
+                        <div class="map">
+                            <div class="map-shape">
+                                    <!-- @{Polygon(map.map(_._1): _*)} -->
+                                <pre>
+                                @controller.gametoString
+                                </pre>
+                            </div>
+                        </div>
+
+                        <div class="col-9 gameplay_buttons">
+                            <form method="get">
+                                <button formaction="/game/A">
+                                    Left
+                                </button>
+                                <button formaction="/game/D">
+                                    Right
+                                </button>
+                                <button formaction="/game/W">
+                                    Angle Up
+                                </button>
+                                <button formaction="/game/S">
+                                    Angle Down
+                                </button>
+                                <button formaction="/game/+">
+                                    Power +
+                                </button>
+                                <button formaction="/game/-">
+                                    Power -
+                                </button>
+                                <button formaction="/game/F">
+                                    Shooting
+                                </button>
+                                <button formaction="/game/P">
+                                    Switch Player
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </body>
     </html>
