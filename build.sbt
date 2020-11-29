@@ -34,3 +34,5 @@ unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/
 
 includeFilter in (Assets, LessKeys.less) := "tank.less" | "menu.less" | "about.less"
 
+javaOptions ++= Seq("", "-Djdk.lang.Process.allowAmbiguousCommands=true")
+
