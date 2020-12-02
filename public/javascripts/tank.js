@@ -1,4 +1,4 @@
-window.addEventListener('load', function() {
+$(document).ready(function() {
     tankgame();
     drawMapGerade();
 });
@@ -119,7 +119,7 @@ function flipHorizontally(img) {
     ctx.setTransform(1,0,0,1,0,0);
 }
 
-document.onkeydown=function(e){
+$(document).keydown(function(e){
     isKeyDown=true;
     if(keyUP === true){
         tank_player2.y -= speed;
@@ -145,15 +145,16 @@ document.onkeydown=function(e){
     if (keyD === true) { // tank move right
         tank_player1.x += speed;
     }
-};
+});
 
-document.onkeyup=function(e){
+$(document).keyup(function(e){
     isKeyDown=false;
     i=1;
-};
+});
 
 function tankgame() {
-    ctx = document.getElementById("canvas").getContext("2d");
+    // returns a html DOM object, without '[0]' its an jquery object
+    ctx = $("#canvas")[0].getContext("2d");
     setInterval(draw,10);
 }
 
