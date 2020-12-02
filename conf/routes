@@ -16,6 +16,8 @@ GET     /game                       controllers.TankController.tank
 
 GET     /about                      controllers.TankController.about
 
+GET     /controls                   controllers.TankController.controls
+
 GET     /game/A                     controllers.TankController.moveLeft
 
 GET     /game/D                     controllers.TankController.moveRight

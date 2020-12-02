@@ -1,85 +1,16 @@
-/**window.onload = function () {
-    refresh();
-}
+window.addEventListener('load', function() {
+    tankgame();
+    drawMapGerade();
+});
 
-function refresh() {
-    draw();
-}
-
-function draw() {
-    //let html = []
-    //html.push('<img id="tankimage" src="@routes.Assets.versioned("images/tank_player.png")" />');
-    //document.getElementById("map").innerHTML = html.join();
-    //moveTank();
-    let img = new Image();
-    img.src = '@routes.Assets.versioned("images/tank_player.png")';
-    img.id = 'tankimage';
-
-}
-
-function moveTank() {
-    var image = document.getElementById("tankimage");
-    image.style.right = "100px";
-}*/
-
-/**
-window.load = function () {
-    var image = new Image(100,100);
-    image.addEventListener('load', function () {
-        document.body.getElementsByClassName("map").appendChild(image);
-    }, false);
-    image.src = "http://localhost:9000/assets/images/tank_player.png";
-    $("#ButtonRight").onclick = function () {
-        moveRight(image);
-    };
-}
-
-function moveRight(image) {
-    image.x = image.x + 100;
-}
-
-
-var canvas = document.getElementById("testcanvas");
-var ctx = canvas.getContext("2d");
-var image = new Image();
-var tank = {};
-
-var setTank = function() {
-    tank.x = 100;
-    tank.y = 100;
-}
-
-var draw = function() {
-    image.onload = function () {
-        ctx.drawImage(image, tank.x, tank.y);
-    }
-    image.src = "http://localhost:9000/assets/images/tank_player.png";
-}
-
-$("#ButtonRight").onclick = function() {
-    moveRight();
-}
-
-function moveRight() {
-    tank.x += 100;
-}
-
-var main = function () {
-    setTank();
-    draw();
-};
-
-main();
-*/
-
-
-var LEFT=37,UP=38,RIGHT=39,DOWN=40;//KeyCodevar
-var W=87,A=65,S=83,D=68;
 var isKeyDown=false;
 var speed=2;
 var ctx;
-var sx=[0,20,40],sy=[0,20,40,60];
-var sWidth=80,sHeight=55;
+
+var map = {
+    x:0,
+    y:0
+}
 
 var tank_player1 = {
     x:240,
@@ -108,6 +39,10 @@ var keyW = false;
 var keyA = false;
 var keyS = false;
 var keyD = false;
+var keyLeft = false;
+var keyRight = false;
+var keyDown = false;
+var keyUP = false;
 
 function onKeyDown(event) {
     var keyCode = event.keyCode;
@@ -124,6 +59,18 @@ function onKeyDown(event) {
             break;
         case 87: // W
             keyW = true;
+            break;
+        case 37: // Left
+            keyLeft = true;
+            break;
+        case 39: // Right
+            keyRight = true;
+            break;
+        case 38: // Up
+            keyUP = true;
+            break;
+        case 40: // Down
+            keyDown = true;
             break;
     }
 }
@@ -144,35 +91,46 @@ function onKeyUp(event) {
         case 87: //w
             keyW = false;
             break;
+        case 37: // Left
+            keyLeft = false;
+            break;
+        case 39: // Right
+            keyRight = false;
+            break;
+        case 38: // Up
+            keyUP = false;
+            break;
+        case 40: // Down
+            keyDown = false;
+            break;
     }
 }
 
 var draw=function(){
-    ctx.clearRect(0,0,800,800);
-    ctx.drawImage(img, tank_player1.x-tank_player1.dx, tank_player1.y-tank_player1.dy, sWidth, sHeight);
-    //ctx.drawImage(img, tank_player2.x-tank_player2.dx, tank_player2.y-tank_player2.dy, sWidth, sHeight);
+    ctx.clearRect(0,0,1100,600);
+    ctx.drawImage(img, tank_player1.x-tank_player1.dx, tank_player1.y-tank_player1.dy);
     flipHorizontally(img);
 }
 
 function flipHorizontally(img) {
     ctx.translate(tank_player2.x-tank_player2.dx, tank_player2.y-tank_player2.dy);
     ctx.scale(-1, 1);
-    ctx.drawImage(img, 0, 0, sWidth, sHeight);
+    ctx.drawImage(img, 0, 0);
     ctx.setTransform(1,0,0,1,0,0);
 }
 
 document.onkeydown=function(e){
     isKeyDown=true;
-    if(e.keyCode===UP){
+    if(keyUP === true){
         tank_player2.y -= speed;
     }
-    if(e.keyCode===DOWN){
+    if(keyDown === true){
         tank_player2.y += speed;
     }
-    if(e.keyCode===LEFT){
+    if(keyLeft === true){
         tank_player2.x -= speed;
     }
-    if(e.keyCode===RIGHT){
+    if(keyRight === true){
         tank_player2.x += speed;
     }
     if (keyW === true) { // tank move up
@@ -192,20 +150,24 @@ document.onkeydown=function(e){
 document.onkeyup=function(e){
     isKeyDown=false;
     i=1;
-    draw();
 };
 
-window.onload=function(){
-    ctx=document.getElementById("canvas").getContext("2d");
-    setInterval(draw,1000/30);
-    setInterval(function(){
-        if(isKeyDown){
-            i+=50;
-            if(i>2)
-                i=0;
-        }
-    },500);
-};
+function tankgame() {
+    ctx = document.getElementById("canvas").getContext("2d");
+    setInterval(draw,10);
+}
+
+function drawMapGerade() {
+    ctx.beginPath();
+    ctx.fillStyle = 'black';
+    ctx.moveTo(map.x,map.y + 350)
+    ctx.lineTo(map.x + ctx.width, map.y + 350);
+    ctx.lineTo(map.x + ctx.width, map.y);
+    ctx.lineTo(map.x, map.y + ctx.height);
+    ctx.stroke();
+    ctx.closePath();
+    ctx.fill();
+}
 
 
 

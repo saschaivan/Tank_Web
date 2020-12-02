@@ -1,0 +1,67 @@
+@()
+
+@main("Controls") {
+    <html>
+        <head>
+            <link rel="stylesheet" media="screen" type="text/css" href='@routes.Assets.versioned("stylesheets/controls.css")' />
+            <script src='@routes.Assets.versioned("javascripts/bootstrap.min.js")'> </script>
+        </head>
+        <body>
+            <nav class="navbar navbar-expand-md navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Tank</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/game">Game <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="/about">About</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div id="container">
+                <div class="row">
+                    <div class="col-3 control-box">
+                        <div class="controls">
+                            <form>
+                                <label>
+                                    Moving to Left/Right: <input value="A/D" size="2">
+                                </label>
+                            </form>
+                            <br>
+                            <form>
+                                <label>
+                                    Changing shooting angle: <input value="W/S" size="2">
+                                </label>
+                            </form>
+                            <br>
+                            <form>
+                                <label>
+                                    Shooting power: <input value="+/-" size="2">
+                                </label>
+                            </form>
+                            <br>
+                            <form>
+                                <label>
+                                    Shooting: <input value="F" size="2">
+                                </label>
+                            </form>
+                            <br>
+                            <form>
+                                <label>
+                                    Spielerwechsel: <input value="P" size="2">
+                                </label>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+    </html>
+}

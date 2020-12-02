@@ -21,6 +21,10 @@ class TankController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(views.html.index())
   }
 
+  def controls = Action {
+    Ok(views.html.controls())
+  }
+
   def tank = Action {
     Ok(views.html.tank(gamecontroller))
   }
