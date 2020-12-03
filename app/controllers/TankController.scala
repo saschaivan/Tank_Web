@@ -2,16 +2,18 @@ package controllers
 
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.Tank.controller.controllerComponent.ControllerInterface
-import play.api.mvc.{AbstractController, ControllerComponents}
+import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents}
 import de.htwg.se.Tank.{Tank, TankModule, controller}
 import de.htwg.se.Tank.model.gameComponent.gameBase.Map
 import javax.inject.Singleton
+import de.htwg.se.Tank.model.fileIoComponent.fileIoJsonImpl.FileIO
 
 @Singleton
 class TankController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
   val injector = Guice.createInjector(new TankModule)
   val gamecontroller = injector.getInstance(classOf[ControllerInterface])
   gamecontroller.setDefaultGame()
+  val game = gamecontroller.getGame
 
   def menu = Action {
     Ok(views.html.TankMenu())
@@ -79,5 +81,8 @@ class TankController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(views.html.tank(gamecontroller))
   }
 
-
+  def gameToJson() = Action {
+    val fileIO = new FileIO
+    Ok(fileIO.gameToJson(game))
+  }
 }

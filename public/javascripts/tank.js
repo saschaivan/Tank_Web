@@ -1,7 +1,17 @@
-$(document).ready(function() {
-    tankgame();
-    drawMapGerade();
-});
+class Game {
+    constructor() {
+        this.Player1 = [];
+        this.Map = [];
+        this.Player2 = [];
+
+    }
+    fill(json) {
+        this.Player1 = json(tank_player1);
+        this.Player2 = json(tank_player2);
+        this.Map = json(map);
+    }
+}
+
 
 var isKeyDown=false;
 var speed=2;
@@ -12,23 +22,27 @@ var map = {
     y:0
 }
 
-var tank_player1 = {
+let game = new Game();
+
+let tank_player1 = {
+    Name:[],
     x:240,
     y:350,
     dx:150,
     dy:-50
 }
 
-var tank_player2 = {
+let tank_player2 = {
+    Name:[],
     x:1100,
     y:350,
     dx:150,
     dy:-50
 }
 
-var i=1;
+let i=1;
 
-var img=new Image();
+let img=new Image();
 img.src="assets/images/tank_icon.png";
 
 // add eventlistener
@@ -45,7 +59,7 @@ var keyDown = false;
 var keyUP = false;
 
 function onKeyDown(event) {
-    var keyCode = event.keyCode;
+    let keyCode = event.keyCode;
 
     switch (keyCode) {
         case 68: // D
@@ -75,8 +89,27 @@ function onKeyDown(event) {
     }
 }
 
+let storage = localStorage;
+
+function safeValues() {
+    let firstName = $("#player1_name").value;
+    storage.setItem('name', firstName);
+}
+
+function getGameJson() {
+    $.ajax({
+        Method: "GET",
+        url: "/game/json",
+        datatype: "json",
+
+        success: function (result) {
+            fillPlayerInformation(result);
+        }
+    });
+}
+
 function onKeyUp(event) {
-    var keyCode = event.keyCode;
+    let keyCode = event.keyCode;
 
     switch (keyCode) {
         case 68: //d
@@ -106,7 +139,7 @@ function onKeyUp(event) {
     }
 }
 
-var draw=function(){
+let draw=function(){
     ctx.clearRect(0,0,1100,600);
     ctx.drawImage(img, tank_player1.x-tank_player1.dx, tank_player1.y-tank_player1.dy);
     flipHorizontally(img);
@@ -171,6 +204,27 @@ function drawMapGerade() {
 }
 
 
+function fillPlayerInformation(result) {
+    alert(result.game.player2.name);
+    /**
+    let Name = Object.keys(storage);
+    Name.forEach(function(key) {
+        alert(storage.getItem(key));
+    });
 
+
+    let html = [];
+    let player1 = "Sascha"
+    let test = $("#test")
+    test.innerText = player1
+    $("#player1").html(html.join('')); */
+}
+
+$(document).ready(function() {
+    safeValues();
+    tankgame();
+    drawMapGerade();
+    getGameJson();
+});
 
 
