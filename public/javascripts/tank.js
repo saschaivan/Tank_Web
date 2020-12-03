@@ -1,6 +1,7 @@
 window.addEventListener('load', function() {
     tankgame();
     drawMapGerade();
+    drawsin();
 });
 
 var isKeyDown=false;
@@ -169,6 +170,31 @@ function drawMapGerade() {
     ctx.fill();
 }
 
+function drawsin(){
+    var canvas = document.getElementById("canvas"),
+        ctx = canvas.getContext('2d'),
+        width = canvas.width = canvas.offsetWidth,
+        height = canvas.height = canvas.offsetHeight;
+
+    var A=50,
+        W=1 / 50,
+        Q=0,
+        H= height / 2;
+
+    ctx.clearRect(0, 0, width, height);
+
+    ctx.beginPath();
+    ctx.lineWidth = 1;
+    ctx.moveTo(0, height /2);
+
+    for (let x = 0; x <=  width; x++) {
+        var y = A *Math.sin(W*x+Q) +H
+        ctx.lineTo(x, y)
+    }
+
+    ctx.stroke();
+    ctx.closePath();
+}
 
 
 
