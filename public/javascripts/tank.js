@@ -1,7 +1,7 @@
 window.addEventListener('load', function() {
+    drawsin();
     tankgame();
     drawMapGerade();
-    drawsin();
 });
 
 var isKeyDown=false;
@@ -109,6 +109,7 @@ function onKeyUp(event) {
 
 var draw=function(){
     ctx.clearRect(0,0,1100,600);
+    drawsin();
     ctx.drawImage(img, tank_player1.x-tank_player1.dx, tank_player1.y-tank_player1.dy);
     flipHorizontally(img);
 }
@@ -179,9 +180,9 @@ function drawsin(){
     var A=50,
         W=1 / 50,
         Q=0,
-        H= height / 2;
+        H= height * 0.75;
 
-    ctx.clearRect(0, 0, width, height);
+    //ctx.clearRect(0, 0, width, height);
 
     ctx.beginPath();
     ctx.lineWidth = 1;
@@ -192,6 +193,7 @@ function drawsin(){
         ctx.lineTo(x, y)
     }
 
+    ctx.fillStyle = '#393957';
     ctx.stroke();
     ctx.closePath();
 }
