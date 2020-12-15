@@ -18,7 +18,12 @@ input[type=text] {
   width: 20em;
 }
 
-input[type=submit] {
+#menubutton {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  text-align: center;
+  display: inline-block;
   border: none;
   background: none;
   display: block;
@@ -42,7 +47,7 @@ input[type=submit] {
   color: #444444;
 }
 
-input[type=submit]:hover {
+#menubutton:hover {
   transition: text-shadow .33s ease-in-out,
   transform .3s ease,
   letter-spacing .3s ease;
@@ -55,6 +60,10 @@ input[type=submit]:hover {
   26px 20px 2px rgba(206,89,55,0);
   transform: translate(0px, 15px);
   letter-spacing: .125em;
+}
+
+#menubutton:focus {
+  outline: none;
 }
 
 .Tank-header {
@@ -89,19 +98,6 @@ input[type=submit]:hover {
   margin-left: 10px;
 }
 
-.buttons {
-  margin-left: auto;
-  margin-right: auto;
-  padding: 10px;
-  text-align: center;
-}
-
-.buttons form {
-  display: inline-block;
-}
-
-
-
 .input-name {
   margin-top: -100px;
 }
@@ -109,8 +105,6 @@ input[type=submit]:hover {
 .input-name input{
   margin: 25px;
 }
-
-
 
 .headertext {
   font: bold 32px 'Arial';

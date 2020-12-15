@@ -10,35 +10,37 @@
 # An example controller showing how to write asynchronous code
 #GET     /message                    controllers.AsyncController.message
 
-GET     /                           controllers.TankController.menu
+GET     /                               controllers.TankController.menu
 
-GET     /game                       controllers.TankController.tank
+GET     /game                           controllers.TankController.tank
 
-GET     /about                      controllers.TankController.about
+GET     /about                          controllers.TankController.about
 
-GET     /controls                   controllers.TankController.controls
+GET     /controls                       controllers.TankController.controls
 
-GET     /game/A                     controllers.TankController.moveLeft
+GET     /game/A                         controllers.TankController.moveLeft
 
-GET     /game/D                     controllers.TankController.moveRight
+GET     /game/D                         controllers.TankController.moveRight
 
-GET     /game/F                     controllers.TankController.shoot
+GET     /game/F                         controllers.TankController.shoot
 
-GET     /game/W                     controllers.TankController.moveAngleUp
+GET     /game/W                         controllers.TankController.moveAngleUp
 
-GET     /game/S                     controllers.TankController.moveAngleDown
+GET     /game/S                         controllers.TankController.moveAngleDown
 
-GET     /game/P                     controllers.TankController.changePlayer
+GET     /game/P                         controllers.TankController.changePlayer
 
-GET     /game/R                     controllers.TankController.redo
+GET     /game/R                         controllers.TankController.redo
 
-GET     /game/U                     controllers.TankController.undo
+GET     /game/U                         controllers.TankController.undo
 
-GET     /game/+                     controllers.TankController.PowerPlus
+GET     /game/+                         controllers.TankController.PowerPlus
 
-GET     /game/-                     controllers.TankController.PowerMinus
+GET     /game/-                         controllers.TankController.PowerMinus
 
-GET     /game/json                  controllers.TankController.gameToJson
+GET     /game/json                      controllers.TankController.gameToJson
+
+#GET     /game/:player1/:player2/:map    controllers.TankController.setGame(player1, player2, map)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

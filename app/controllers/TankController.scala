@@ -7,13 +7,23 @@ import de.htwg.se.Tank.{Tank, TankModule, controller}
 import de.htwg.se.Tank.model.gameComponent.gameBase.Map
 import javax.inject.Singleton
 import de.htwg.se.Tank.model.fileIoComponent.fileIoJsonImpl.FileIO
+import de.htwg.se.Tank.model.playerComponent.playerBase.{Player, Position}
+import play.twirl.api.HtmlFormat
+import views.html.TankMenu
 
 @Singleton
 class TankController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
   val injector = Guice.createInjector(new TankModule)
   val gamecontroller = injector.getInstance(classOf[ControllerInterface])
-  gamecontroller.setDefaultGame()
+  gamecontroller.setGame("", 0, "small", "Sascha", "Yue")
   val game = gamecontroller.getGame
+
+  def setParameter = {
+    var player1 = Map.getPlayer(1)
+    var player2 = Map.getPlayer(2)
+    player1.pos = Position(240, 350)
+    player2.pos = Position(1100, 350)
+  }
 
   def menu = Action {
     Ok(views.html.TankMenu())
@@ -83,6 +93,8 @@ class TankController @Inject()(cc: ControllerComponents) extends AbstractControl
 
   def gameToJson() = Action {
     val fileIO = new FileIO
+    setParameter
+    gamecontroller.save
     Ok(fileIO.gameToJson(game))
   }
 }

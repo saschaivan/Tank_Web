@@ -6,12 +6,15 @@ class Game {
 
     }
     fill(json) {
-        this.Player1 = json(tank_player1);
-        this.Player2 = json(tank_player2);
-        this.Map = json(map);
+        this.Player1.push(json.game.player1.name);
+        this.Player2.push(json.game.player2.name);
+        this.Map.push(json.game.map);
+        tank_player1.x = json.game.player1.posx;
+        tank_player1.y = json.game.player1.posy;
+        tank_player2.x = json.game.player2.posx;
+        tank_player2.y = json.game.player2.posy;
     }
 }
-
 
 var isKeyDown=false;
 var speed=2;
@@ -25,7 +28,7 @@ var map = {
 let game = new Game();
 
 let tank_player1 = {
-    Name:[],
+    Name: [],
     x:240,
     y:350,
     dx:150,
@@ -40,11 +43,18 @@ let tank_player2 = {
     dy:-50
 }
 
+function updatePosition(json) {
+    tank_player1.x = json.game.player1.posx;
+    tank_player1.y = json.game.player1.posy;
+}
+
 let i=1;
 
 let img=new Image();
 img.src="assets/images/tank_icon.png";
 
+
+// tank movement
 // add eventlistener
 window.addEventListener("keydown", onKeyDown, false);
 window.addEventListener("keyup", onKeyUp, false);
@@ -89,25 +99,6 @@ function onKeyDown(event) {
     }
 }
 
-let storage = localStorage;
-
-function safeValues() {
-    let firstName = $("#player1_name").value;
-    storage.setItem('name', firstName);
-}
-
-function getGameJson() {
-    $.ajax({
-        Method: "GET",
-        url: "/game/json",
-        datatype: "json",
-
-        success: function (result) {
-            fillPlayerInformation(result);
-        }
-    });
-}
-
 function onKeyUp(event) {
     let keyCode = event.keyCode;
 
@@ -137,19 +128,6 @@ function onKeyUp(event) {
             keyDown = false;
             break;
     }
-}
-
-let draw=function(){
-    ctx.clearRect(0,0,1100,600);
-    ctx.drawImage(img, tank_player1.x-tank_player1.dx, tank_player1.y-tank_player1.dy);
-    flipHorizontally(img);
-}
-
-function flipHorizontally(img) {
-    ctx.translate(tank_player2.x-tank_player2.dx, tank_player2.y-tank_player2.dy);
-    ctx.scale(-1, 1);
-    ctx.drawImage(img, 0, 0);
-    ctx.setTransform(1,0,0,1,0,0);
 }
 
 $(document).keydown(function(e){
@@ -185,12 +163,43 @@ $(document).keyup(function(e){
     i=1;
 });
 
+// json
+function getGameJson() {
+    $.ajax({
+        Method: "GET",
+        url: "/game/json",
+        datatype: "json",
+
+        success: function (result) {
+            //pushData(result);
+            game = new Game();
+            game.fill(result);
+        }
+    });
+}
+
+// draw tanks and update positions
+let draw=function(){
+    ctx.clearRect(0,0,1100,600);
+    ctx.drawImage(img, tank_player1.x-tank_player1.dx, tank_player1.y-tank_player1.dy);
+    flipHorizontally(img);
+}
+
+function flipHorizontally(img) {
+    ctx.translate(tank_player2.x-tank_player2.dx, tank_player2.y-tank_player2.dy);
+    ctx.scale(-1, 1);
+    ctx.drawImage(img, 0, 0);
+    ctx.setTransform(1,0,0,1,0,0);
+}
+
 function tankgame() {
     // returns a html DOM object, without '[0]' its an jquery object
     ctx = $("#canvas")[0].getContext("2d");
     setInterval(draw,10);
 }
 
+
+// draw map, not finished yet
 function drawMapGerade() {
     ctx.beginPath();
     ctx.fillStyle = 'black';
@@ -204,27 +213,38 @@ function drawMapGerade() {
 }
 
 
-function fillPlayerInformation(result) {
-    alert(result.game.player2.name);
-    /**
-    let Name = Object.keys(storage);
-    Name.forEach(function(key) {
-        alert(storage.getItem(key));
-    });
+function pushData(result) {
+    let htmlplayer1 = [];
+    let htmlplayer2 = [];
+    htmlplayer1.push('<p>');
+    htmlplayer1.push(game.Player1);
+    htmlplayer1.push('</p>')
 
+    htmlplayer2.push('<p>');
+    htmlplayer2.push(game.Player2);
+    htmlplayer2.push('</p>')
 
-    let html = [];
-    let player1 = "Sascha"
-    let test = $("#test")
-    test.innerText = player1
-    $("#player1").html(html.join('')); */
+    console.log(tank_player1.Name);
+
+    $("#player1").html(htmlplayer1.join(''));
+    $("#player2").html(htmlplayer2.join(''));
 }
 
+// load pages
+function gamePage() {
+    window.location.href = "http://localhost:9000/game"
+}
+
+function aboutPage() {
+    window.location.href = "http://localhost:9000/about"
+}
+
+
 $(document).ready(function() {
-    safeValues();
     tankgame();
-    drawMapGerade();
+    //drawMapGerade();
     getGameJson();
 });
+
 
 

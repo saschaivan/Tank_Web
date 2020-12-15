@@ -1,0 +1,29 @@
+{
+  "game" : {
+    "partyname" : "",
+    "mapNo" : 0,
+    "size" : "small",
+    "map" : {
+      "activePlayer_id" : 1,
+      "moves" : 10
+    },
+    "player1" : {
+      "name" : "Sascha",
+      "id" : 1,
+      "posx" : 240,
+      "posy" : 350
+    },
+    "player2" : {
+      "name" : "Yue",
+      "id" : 2,
+      "posx" : 1100,
+      "posy" : 350
+    },
+    "tank" : {
+      "life1" : 100,
+      "angle1" : 30,
+      "life2" : 100,
+      "angle2" : 150
+    }
+  }
+}

@@ -21,8 +21,12 @@
                         <form>
                             <div class="row">
                                 <div class="input-group mb-3 input-name">
-                                    <input id="player1_name" type="text" class="form-control" placeholder="SPIELER 1" aria-label="SPIELER 1">
-                                    <input id="player2_name" type="text" class="form-control" placeholder="SPIELER 2" aria-label="SPIELER 2">
+                                    <form id="data_player1">
+                                        <input id="player1_name" type="text" class="form-control" placeholder="SPIELER 1">
+                                    </form>
+                                    <form id="data_player2">
+                                        <input id="player2_name" type="text" class="form-control" placeholder="SPIELER 2">
+                                    </form>
                                 </div>
 
                                 <div class="col-md-2 dropdown">
@@ -41,16 +45,13 @@
                         </form>
                     </div>
                 </div>
+                <div class="buttons">
+                    <div class="row">
+                        <button id="menubutton" type="sumbit" onclick="gamePage()">Start</button>
+                    </div>
 
-                <div class="row">
-                    <div class="col-md-4 center-block buttons">
-                        <form method="get" action="game">
-                            <input type="submit" value="Start">
-                        </form>
-                        <br>
-                        <form method="get" action="about">
-                            <input type="submit" value="about">
-                        </form>
+                    <div class="row">
+                        <button id="menubutton" type="submit" onclick="aboutPage()">About</button>
                     </div>
                 </div>
             </div>
