@@ -239,11 +239,19 @@ function aboutPage() {
     window.location.href = "http://localhost:9000/about"
 }
 
+//hier get the login map data.
+function getLogin() {
+    var map = $("#map").val();
+    console.log(map);
+}
+
+
 
 $(document).ready(function() {
     tankgame();
     //drawMapGerade();
     getGameJson();
+    getFormData();
 });
 
 

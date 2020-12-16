@@ -30,16 +30,25 @@
                                 </div>
 
                                 <div class="col-md-2 dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button"
-                                    id="dropdownMenuButton" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="map"
+                                    id="dropdownMenuButton" data-toggle="dropdown">
                                         Map
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item" type="button">Wolfsschanze</button>
-                                        <button class="dropdown-item" type="button">Gerade</button>
-                                        <button class="dropdown-item" type="button">Sägezahnhügel</button>
-                                    </div>
+                                    <ul class="dropdown-menu" role="menu" id="mapvalue" aria-labelledby="dropdownMenuButton">
+                                        <li>Wolfsschanze</li>
+                                        <li>Gerade</li>
+                                        <li>Sägezahnhügel</li>
+                                    </ul>
+                                    <script>
+                                        var list = document.getElementById("mapvalue").getElementsByTagName("li");
+                                        for (i=0;i<list.length;i++) {
+                                            list[i].onclick = function (){
+                                                $("#map").html(this.innerHTML);
+                                                $("#map").val(i);
+                                            }
+                                        }
+
+                                    </script>
                                 </div>
                             </div>
                         </form>
@@ -47,11 +56,11 @@
                 </div>
                 <div class="buttons">
                     <div class="row">
-                        <button id="menubutton" type="sumbit" onclick="gamePage()">Start</button>
+                        <button id="startbutton" class="menubutton" type="sumbit" onclick="getLogin()" >Start</button>
                     </div>
 
                     <div class="row">
-                        <button id="menubutton" type="submit" onclick="aboutPage()">About</button>
+                        <button class="menubutton" type="submit" onclick="aboutPage()">About</button>
                     </div>
                 </div>
             </div>
