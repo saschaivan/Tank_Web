@@ -1,4 +1,4 @@
-class Game {
+class TankGame {
     constructor() {
         this.Player1 = [];
         this.Map = [];
@@ -49,6 +49,7 @@ let i=1;
 
 let img=new Image();
 img.src="assets/images/tank_icon.png";
+img.id = "tank";
 
 
 // tank movement
@@ -207,9 +208,7 @@ function tankgame() {
     // returns a html DOM object, without '[0]' its an jquery object
     ctx = $("#canvas")[0].getContext("2d");
     setInterval(draw,1);
-    setInterval(drawMapGerade,1);
-    drawMapGerade();
-    setInterval(draw,10);
+    //setInterval(drawMapGerade,1);
 }
 
 
@@ -323,9 +322,8 @@ function getdata(){
 }
 
 $(document).ready(function() {
-
+    connectWebSocket();
     tankgame();
-    drawMapGerade();
     getGameJson();
     //getFormData();
     getLoginJson();
