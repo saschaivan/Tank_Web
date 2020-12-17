@@ -9,15 +9,12 @@ class Game {
         this.Player1.push(json.game.player1.name);
         this.Player2.push(json.game.player2.name);
         this.Map.push(json.game.map);
-        tank_player1.x = json.game.player1.posx;
-        tank_player1.y = json.game.player1.posy;
-        tank_player2.x = json.game.player2.posx;
-        tank_player2.y = json.game.player2.posy;
+        updateGame(json);
     }
 }
 
 var isKeyDown=false;
-var speed=2;
+var speed=5;
 var ctx;
 
 var map = {
@@ -25,7 +22,7 @@ var map = {
     y:0
 }
 
-let game = new Game();
+let game = new TankGame();
 
 let tank_player1 = {
     Name: [],
@@ -178,6 +175,20 @@ function getGameJson() {
     });
 }
 
+function test() {
+    $.ajax({
+       Method: "GET",
+
+    });
+}
+
+function updateGame(json) {
+    tank_player1.x = json.game.player1.posx;
+    tank_player1.y = json.game.player1.posy;
+    tank_player2.x = json.game.player2.posx;
+    tank_player2.y = json.game.player2.posy;
+}
+
 // draw tanks and update positions
 let draw=function(){
     ctx.clearRect(0,0,1100,600);
@@ -195,13 +206,16 @@ function flipHorizontally(img) {
 function tankgame() {
     // returns a html DOM object, without '[0]' its an jquery object
     ctx = $("#canvas")[0].getContext("2d");
+    setInterval(draw,1);
+    setInterval(drawMapGerade,1);
     drawMapGerade();
     setInterval(draw,10);
 }
 
 
 // draw map, not finished yet
-function drawMapGerade() {
+let drawMapGerade = function () {
+    /**
     ctx.beginPath();
     ctx.fillStyle = 'black';
     ctx.moveTo(map.x,map.y + 350)
@@ -210,7 +224,38 @@ function drawMapGerade() {
     ctx.lineTo(map.x, map.y + ctx.height);
     ctx.stroke();
     ctx.closePath();
-    ctx.fill();
+    ctx.fill(); */
+
+    ctx.beginPath();
+    ctx.fillStyle = "#b47d49"
+    ctx.fillRect(0,465,1050,200);
+    ctx.stroke();
+}
+var interval;
+function connectWebSocket() {
+    var webSocket = new WebSocket("ws://localhost:9000/game/websocket");
+
+    webSocket.setTimeout
+
+    webSocket.onopen = function(event) {
+        console.log("Connected to Websocket");
+        interval = setInterval(function() {
+            webSocket.send(JSON.stringify("ping"))
+        }, 5000);
+    }
+
+    webSocket.onclose = function () {
+        console.log('Connection with Websocket Closed!');
+    };
+
+    webSocket.onerror = function (error) {
+        console.log('Error in Websocket Occured: ' + error);
+    };
+
+    webSocket.onmessage = function (e) {
+        console.log(e);
+        game.fill(e);
+    }
 }
 
 
@@ -280,7 +325,7 @@ function getdata(){
 $(document).ready(function() {
 
     tankgame();
-    //drawMapGerade();
+    drawMapGerade();
     getGameJson();
     //getFormData();
     getLoginJson();

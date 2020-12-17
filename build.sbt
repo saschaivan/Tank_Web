@@ -30,6 +30,8 @@ scalaVersion := "2.12.4"
 
 libraryDependencies ++= Seq( jdbc , ehcache , ws , specs2 % Test , guice )
 
+libraryDependencies += "javax.xml.bind" % "jaxb-api" % "2.1"
+
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
 
 includeFilter in (Assets, LessKeys.less) := "tank.less" | "menu.less" | "about.less" | "controls.less"

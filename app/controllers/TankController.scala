@@ -1,7 +1,8 @@
 package controllers
 
+import akka.actor.{Actor, ActorRef}
 import com.google.inject.{Guice, Inject}
-import de.htwg.se.Tank.controller.controllerComponent.ControllerInterface
+import de.htwg.se.Tank.controller.controllerComponent.{ControllerInterface, Fire, Hit, NewGame, UpdateMap}
 import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents, WebSocket}
 import de.htwg.se.Tank.{Tank, TankModule, controller}
 import de.htwg.se.Tank.model.gameComponent.gameBase.Map
@@ -9,23 +10,23 @@ import javax.inject.Singleton
 import de.htwg.se.Tank.model.fileIoComponent.fileIoJsonImpl.FileIO
 import de.htwg.se.Tank.model.playerComponent.playerBase.{Player, Position}
 import play.api.libs.streams.ActorFlow
-import akka.actor.ActorSystem
-import akka.stream.Materializer
-import akka.actor._
-import play.api.libs.json.{JsValue, Json}
 import play.twirl.api.HtmlFormat
 import views.html.TankMenu
 
 import scala.swing.Reactor
+import akka.actor.{ActorRefFactory, ActorSystem}
+import akka.stream.Materializer
+import akka.actor._
+import play.api.Play.materializer
+import play.api.libs.json.{JsValue, Json}
 
 @Singleton
-class TankController @Inject()(cc: ControllerComponents) (implicit system: ActorSystem, mat: Materializer) extends AbstractController(cc) {
+class TankController @Inject()(cc: ControllerComponents)(implicit System: ActorSystem, mat:Materializer) extends AbstractController(cc) {
   val injector = Guice.createInjector(new TankModule)
   val gamecontroller = injector.getInstance(classOf[ControllerInterface])
+  val fileIO = new FileIO
   gamecontroller.setGame("", 0, "small", "Sascha", "Yue")
   val game = gamecontroller.getGame
-
-  //var gameJson: JsValue = Json.parse("{}")
 
   def setParameter = {
     var player1 = Map.getPlayer(1)
@@ -101,43 +102,41 @@ class TankController @Inject()(cc: ControllerComponents) (implicit system: Actor
   }
 
   def gameToJson() = Action {
-    val fileIO = new FileIO
     setParameter
     gamecontroller.save
     Ok(fileIO.gameToJson(game))
   }
 
-  def socket = WebSocket.accept[String, String] { request =>
+  def socket = WebSocket.accept[JsValue, JsValue] { request =>
     ActorFlow.actorRef { out =>
-      println("Connect received")
       TankWebSocketActorFactory.create(out)
     }
   }
 
-  object TankWebSocketActorFactory{
+  object TankWebSocketActorFactory {
     def create(out: ActorRef) = {
-      Props(new TankWebSockeActor(out))
+      Props(new TankWebSocketActor(out))
     }
   }
 
-  class TankWebSockeActor(out: ActorRef) extends Actor with Reactor{
+  class TankWebSocketActor(out:ActorRef) extends Actor with Reactor {
     listenTo(gamecontroller)
-
-    def receive: Actor.Receive = {
+    override def receive = {
       case msg: String =>
-        //out ! (gamecontroller.toJson.toString)
-        println("Sent Json to Client:" + msg)
+        out ! (fileIO.gameToJson(game))
+        println("Sent Json to Client" + msg)
+      case "ping" => out ! Json.obj("alive" -> "pong")
     }
 
     reactions += {
-
+      case event: NewGame => sendJasonToClient
+      case event: UpdateMap => sendJasonToClient
+      case event: Fire => sendJasonToClient
+      case event: Hit => sendJasonToClient
     }
 
-    def sendJsonToClient = {
-      println("Received event from Controller")
-      //out ! (gamecontroller.toJson.toString)
+    def sendJasonToClient = {
+      out ! (fileIO.gameToJson(game))
     }
   }
-
-
 }
