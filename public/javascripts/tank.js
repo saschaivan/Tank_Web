@@ -195,6 +195,7 @@ function flipHorizontally(img) {
 function tankgame() {
     // returns a html DOM object, without '[0]' its an jquery object
     ctx = $("#canvas")[0].getContext("2d");
+    drawMapGerade();
     setInterval(draw,10);
 }
 
@@ -258,9 +259,8 @@ function getLoginJson(){
         url: "http://localhost:9000",
         datatype: "html",
 
-
         success: function (data) {
-            console.log(data);
+            console.log("set the value successful");
         }
     });
 }
@@ -275,7 +275,6 @@ function getdata(){
             Request[strs[i ].split("=")[0]]=unescape(strs[i].split("=")[1]);
         }
     }
-    console.log(Request);
 }
 
 $(document).ready(function() {
@@ -284,9 +283,8 @@ $(document).ready(function() {
     //drawMapGerade();
     getGameJson();
     //getFormData();
-    //getLoginJson();
+    getLoginJson();
     getdata();
-    console.log(localStorage);
 });
 
 
