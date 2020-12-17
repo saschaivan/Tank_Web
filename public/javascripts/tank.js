@@ -240,18 +240,53 @@ function aboutPage() {
 }
 
 //hier get the login map data.
+var localStorage = window.localStorage;
+
 function getLogin() {
+    gamePage();
+    var player1 = $("#player1_name").val();
+    var player2 = $("#player2_name").val();
     var map = $("#map").val();
-    console.log(map);
+    localStorage.setItem("mapvalue", map);
+    localStorage.setItem("player1", player1);
+    localStorage.setItem("player2", player2);
 }
 
+function getLoginJson(){
+    $.ajax({
+        Method: "GET",
+        url: "http://localhost:9000",
+        datatype: "html",
 
+
+        success: function (data) {
+            console.log(data);
+        }
+    });
+}
+
+function getdata(){
+    var url= "http://localhost:9000";
+    var Request = new Object();
+    if(url.indexOf("?")!=-1){
+        var str = url.substr(1);
+        strs = str.split("&");
+        for(var i=0;i<strs.length;i++){
+            Request[strs[i ].split("=")[0]]=unescape(strs[i].split("=")[1]);
+        }
+    }
+    console.log(Request);
+}
 
 $(document).ready(function() {
+
     tankgame();
     //drawMapGerade();
     getGameJson();
-    getFormData();
+    //getFormData();
+    //getLoginJson();
+    getdata();
+    console.log(localStorage);
 });
 
 
