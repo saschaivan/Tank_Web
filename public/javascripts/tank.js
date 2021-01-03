@@ -32,7 +32,7 @@ class Tank_Game {
         this.mapfirstx.push(json.map[0][0] + 240); // get the x value out of the array of arrays, 0 -> +240 (scale)
         this.mapfirsty.push(json.map[0][1] * 35); // get the y value out of the array of arrays, 10 -> *35 = 350 (scale
         this.maplastx.push(json.map[json.map.length - 1][0] * 11); // ~100 -> *11 = 1100
-        this.maplasty.push(json.map[json.map.length - 1][1] * 10); // 10 -> *35 = 350
+        this.maplasty.push(json.map[json.map.length - 1][1] * 35); // 10 -> *35 = 350
     }
 }
 
@@ -197,7 +197,7 @@ function updatePositions(json) {
 }
 
 // draw tanks and update positions
-let draw = function(){
+let draw = function() {
     ctx.clearRect(0,0,1100,600);
     ctx.drawImage(img, tank_player1.x - tank_player1.dx, tank_player1.y - tank_player1.dy);
     flipHorizontally(img);
@@ -215,11 +215,12 @@ function tankgame() {
     getGameJson();
     ctx = $("#canvas")[0].getContext("2d");
     setInterval(draw,1);
+    //setInterval(function() { drawMap(game.mapfirstx, game.mapfirsty, game.maplastx, game.maplasty); },1);
 }
 
 
 // draw map using only the fist and the last value of the map array
-function drawMap(X1, Y1, X2, Y2) {
+function drawMap (X1, Y1, X2, Y2) {
     ctx.beginPath();
     ctx.translate(X1, Y1)
     ctx.moveTo(240, 350);
@@ -340,7 +341,6 @@ $(document).ready(function() {
     connectWebSocket();
     tankgame();
     getMapCoordinates();
-    drawMap(game.mapfirstx, game.mapfirsty, game.maplastx, game.maplasty);
 });
 
 
