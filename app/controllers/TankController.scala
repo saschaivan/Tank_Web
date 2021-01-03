@@ -26,7 +26,9 @@ class TankController @Inject()(cc: ControllerComponents)(implicit System: ActorS
   val gamecontroller = injector.getInstance(classOf[ControllerInterface])
   val fileIO = new FileIO
   gamecontroller.setGame("", 0, "small", "Sascha", "Yue")
+  gamecontroller.publish(new NewGame)
   val game = gamecontroller.getGame
+  Map.activePlayer = Map.p1
 
   def setParameter = {
     var player1 = Map.getPlayer(1)
@@ -53,12 +55,16 @@ class TankController @Inject()(cc: ControllerComponents)(implicit System: ActorS
 
   def moveLeft = Action {
     gamecontroller.moveLeft()
-    Ok(views.html.tank(gamecontroller))
+    if (Map.moves == 0)
+      game.changePlayer()
+    Ok(fileIO.gameToJson(game))
   }
 
   def moveRight = Action {
     gamecontroller.moveRight()
-    Ok(views.html.tank(gamecontroller))
+    if (Map.moves == 0)
+      game.changePlayer()
+    Ok(fileIO.gameToJson(game))
   }
 
   def shoot = Action {
@@ -102,7 +108,6 @@ class TankController @Inject()(cc: ControllerComponents)(implicit System: ActorS
   }
 
   def gameToJson() = Action {
-    setParameter
     gamecontroller.save
     Ok(fileIO.gameToJson(game))
   }
@@ -123,20 +128,20 @@ class TankController @Inject()(cc: ControllerComponents)(implicit System: ActorS
     listenTo(gamecontroller)
     override def receive = {
       case msg: String =>
-        out ! (fileIO.gameToJson(game))
+        out ! fileIO.gameToJson(game)
         println("Sent Json to Client" + msg)
       case "ping" => out ! Json.obj("alive" -> "pong")
     }
 
     reactions += {
-      case event: NewGame => sendJasonToClient
-      case event: UpdateMap => sendJasonToClient
-      case event: Fire => sendJasonToClient
-      case event: Hit => sendJasonToClient
+      case event: NewGame => sendJsonToClient
+      case event: UpdateMap => sendJsonToClient
+      case event: Fire => sendJsonToClient
+      case event: Hit => sendJsonToClient
     }
 
-    def sendJasonToClient = {
-      out ! (fileIO.gameToJson(game))
+    def sendJsonToClient = {
+      out ! fileIO.gameToJson(game)
     }
   }
 }

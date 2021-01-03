@@ -1,4 +1,4 @@
-class TankGame {
+class Tank_Game {
     constructor() {
         this.Player1 = [];
         this.Map = [];
@@ -9,7 +9,7 @@ class TankGame {
         this.Player1.push(json.game.player1.name);
         this.Player2.push(json.game.player2.name);
         this.Map.push(json.game.map);
-        updateGame(json);
+        updatePositions(json);
     }
 }
 
@@ -22,27 +22,22 @@ var map = {
     y:0
 }
 
-let game = new TankGame();
+let game = new Tank_Game();
 
 let tank_player1 = {
     Name: [],
-    x:240,
-    y:350,
+    x:0,
+    y:0,
     dx:150,
     dy:-50
 }
 
 let tank_player2 = {
     Name:[],
-    x:1100,
-    y:350,
+    x:0,
+    y:0,
     dx:150,
     dy:-50
-}
-
-function updatePosition(json) {
-    tank_player1.x = json.game.player1.posx;
-    tank_player1.y = json.game.player1.posy;
 }
 
 let i=1;
@@ -51,21 +46,15 @@ let img=new Image();
 img.src="assets/images/tank_icon.png";
 img.id = "tank";
 
-
-// tank movement
-// add eventlistener
 window.addEventListener("keydown", onKeyDown, false);
 window.addEventListener("keyup", onKeyUp, false);
 
-var keyW = false;
 var keyA = false;
-var keyS = false;
 var keyD = false;
 var keyLeft = false;
 var keyRight = false;
-var keyDown = false;
-var keyUP = false;
 
+// tank movement
 function onKeyDown(event) {
     let keyCode = event.keyCode;
 
@@ -73,26 +62,14 @@ function onKeyDown(event) {
         case 68: // D
             keyD = true;
             break;
-        case 83: // S
-            keyS = true;
-            break;
         case 65: // A
             keyA = true;
-            break;
-        case 87: // W
-            keyW = true;
             break;
         case 37: // Left
             keyLeft = true;
             break;
         case 39: // Right
             keyRight = true;
-            break;
-        case 38: // Up
-            keyUP = true;
-            break;
-        case 40: // Down
-            keyDown = true;
             break;
     }
 }
@@ -104,14 +81,8 @@ function onKeyUp(event) {
         case 68: //d
             keyD = false;
             break;
-        case 83: //s
-            keyS = false;
-            break;
         case 65: //a
             keyA = false;
-            break;
-        case 87: //w
-            keyW = false;
             break;
         case 37: // Left
             keyLeft = false;
@@ -119,40 +90,22 @@ function onKeyUp(event) {
         case 39: // Right
             keyRight = false;
             break;
-        case 38: // Up
-            keyUP = false;
-            break;
-        case 40: // Down
-            keyDown = false;
-            break;
     }
 }
 
 $(document).keydown(function(e){
     isKeyDown=true;
-    if(keyUP === true){
-        tank_player2.y -= speed;
-    }
-    if(keyDown === true){
-        tank_player2.y += speed;
-    }
     if(keyLeft === true){
-        tank_player2.x -= speed;
+        moveLeft();
     }
     if(keyRight === true){
-        tank_player2.x += speed;
-    }
-    if (keyW === true) { // tank move up
-        tank_player1.y -= speed;
+        moveRight();
     }
     if (keyA === true) { // tank move left
-        tank_player1.x -= speed;
-    }
-    if (keyS === true) { // tank move down
-        tank_player1.y += speed;
+        moveLeft();
     }
     if (keyD === true) { // tank move right
-        tank_player1.x += speed;
+        moveRight();
     }
 });
 
@@ -161,33 +114,50 @@ $(document).keyup(function(e){
     i=1;
 });
 
-// json
+
+function moveRight() {
+    updateGame('D'); // moveRight
+}
+
+function moveLeft() {
+    updateGame('A'); // moveLeft
+}
+
+// update game based on key press with json file
+function updateGame(direction) {
+    $.ajax({
+        Method: "GET",
+        url: "/game/" + direction.toString(),
+        datatype: "json",
+
+        success: function (update) {
+            console.log(update);
+            game.fill(update);
+        }
+    });
+}
+
+
+// json to start the game
 function getGameJson() {
     $.ajax({
         Method: "GET",
         url: "/game/json",
         datatype: "json",
 
-        success: function (result) {
-            //pushData(result);
-            game = new Game();
-            game.fill(result);
+        success: function (update) {
+            console.log(update)
+            game.fill(update);
+            pushData();
         }
     });
 }
 
-function test() {
-    $.ajax({
-       Method: "GET",
-
-    });
-}
-
-function updateGame(json) {
-    tank_player1.x = json.game.player1.posx;
-    tank_player1.y = json.game.player1.posy;
-    tank_player2.x = json.game.player2.posx;
-    tank_player2.y = json.game.player2.posy;
+function updatePositions(json) {
+    tank_player1.x = json.game.player1.posx * 16; // ~15 -> 240 (16)
+    tank_player1.y = json.game.player1.posy * 32; // ~11 -> 350 (32)
+    tank_player2.x = json.game.player2.posx * 13; // ~88 -> 1100 (13)
+    tank_player2.y = json.game.player2.posy * 39; // ~9 -> 350 (39)
 }
 
 // draw tanks and update positions
@@ -206,12 +176,12 @@ function flipHorizontally(img) {
 
 function tankgame() {
     // returns a html DOM object, without '[0]' its an jquery object
+    getGameJson();
     ctx = $("#canvas")[0].getContext("2d");
     setInterval(draw,1);
-    //setInterval(drawMapGerade,1);
 }
 
-
+/**
 // draw map, not finished yet
 let drawMapGerade = function () {
     /**
@@ -223,23 +193,24 @@ let drawMapGerade = function () {
     ctx.lineTo(map.x, map.y + ctx.height);
     ctx.stroke();
     ctx.closePath();
-    ctx.fill(); */
+    ctx.fill();
 
     ctx.beginPath();
     ctx.fillStyle = "#b47d49"
     ctx.fillRect(0,465,1050,200);
     ctx.stroke();
 }
+*/
 var interval;
 function connectWebSocket() {
     var webSocket = new WebSocket("ws://localhost:9000/game/websocket");
 
-    webSocket.setTimeout
+    //webSocket.setTimeout
 
     webSocket.onopen = function(event) {
         console.log("Connected to Websocket");
         interval = setInterval(function() {
-            webSocket.send(JSON.stringify("ping"))
+            webSocket.send(JSON.stringify("ping"));
         }, 5000);
     }
 
@@ -253,12 +224,11 @@ function connectWebSocket() {
 
     webSocket.onmessage = function (e) {
         console.log(e);
-        game.fill(e);
     }
 }
 
 
-function pushData(result) {
+function pushData() {
     let htmlplayer1 = [];
     let htmlplayer2 = [];
     htmlplayer1.push('<p>');
@@ -269,7 +239,7 @@ function pushData(result) {
     htmlplayer2.push(game.Player2);
     htmlplayer2.push('</p>')
 
-    console.log(tank_player1.Name);
+    console.log(game.Player1);
 
     $("#player1").html(htmlplayer1.join(''));
     $("#player2").html(htmlplayer2.join(''));
@@ -284,6 +254,7 @@ function aboutPage() {
     window.location.href = "http://localhost:9000/about"
 }
 
+/**
 //hier get the login map data.
 var localStorage = window.localStorage;
 
@@ -320,14 +291,11 @@ function getdata(){
         }
     }
 }
+*/
 
 $(document).ready(function() {
     connectWebSocket();
     tankgame();
-    getGameJson();
-    //getFormData();
-    getLoginJson();
-    getdata();
 });
 
 

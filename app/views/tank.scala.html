@@ -44,34 +44,13 @@
                             <canvas id="canvas" width="1100" height="600"></canvas>
                         </div>
                         <div class="col-9 gameplay_buttons">
-                            <form method="get">
-                                <button formaction="/game/A">
-                                    Left
-                                </button>
-                                <button formaction="/game/D">
-                                    Right
-                                </button>
-                                <button formaction="/game/W">
-                                    Angle Up
-                                </button>
-                                <button formaction="/game/S">
-                                    Angle Down
-                                </button>
-                                <button formaction="/game/+">
-                                    Power +
-                                </button>
-                                <button formaction="/game/-">
-                                    Power -
-                                </button>
-                                <button formaction="/game/F">
-                                    Shooting
-                                </button>
-                                <button formaction="/game/P">
-                                    Switch Player
-                                </button>
-                            </form>
+                            <div class="row">
+                                <button type="sumbit" onclick="moveRight()" >Right</button>
+                            </div>
+                            <div class="row">
+                                <button type="sumbit" onclick="moveLeft()" >Left</button>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>

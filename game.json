@@ -4,20 +4,20 @@
     "mapNo" : 0,
     "size" : "small",
     "map" : {
-      "activePlayer_id" : 1,
-      "moves" : 10
+      "activePlayer_id" : 2,
+      "moves" : 3
     },
     "player1" : {
       "name" : "Sascha",
       "id" : 1,
-      "posx" : 240,
-      "posy" : 350
+      "posx" : 10.693311861423627,
+      "posy" : 11.384395971848607
     },
     "player2" : {
       "name" : "Yue",
       "id" : 2,
-      "posx" : 1100,
-      "posy" : 350
+      "posx" : 70.6993173904338,
+      "posy" : 10.54029753987006
     },
     "tank" : {
       "life1" : 100,
