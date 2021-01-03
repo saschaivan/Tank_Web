@@ -42,6 +42,8 @@ GET     /game/json                      controllers.TankController.gameToJson
 
 GET     /game/websocket                 controllers.TankController.socket
 
+GET     /game/mapcoordinates            controllers.TankController.sendMapCoordinates()
+
 #GET     /game/:player1/:player2/:map    controllers.TankController.setGame(player1, player2, map)
 
 # Map static resources from the /public folder to the /assets URL path

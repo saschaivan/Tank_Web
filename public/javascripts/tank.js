@@ -1,15 +1,38 @@
 class Tank_Game {
     constructor() {
         this.Player1 = [];
-        this.Map = [];
         this.Player2 = [];
-
+        this.player1pos = [];
+        this.player2pos = [];
+        this.player1Life = [];
+        this.player2Life = [];
+        this.player1Angle = [];
+        this.player2Angle = [];
+        this.activePlayer = [];
+        this.numberofmoves = [];
+        this.mapfirstx = [];
+        this.mapfirsty = [];
+        this.maplastx = [];
+        this.maplasty = [];
     }
     fill(json) {
         this.Player1.push(json.game.player1.name);
         this.Player2.push(json.game.player2.name);
-        this.Map.push(json.game.map);
+        this.numberofmoves.push(json.game.map.moves);
+        this.activePlayer.push(json.game.map.activePlayer_id);
+        this.player1Life.push(json.game.tank.life1);
+        this.player2Life.push(json.game.tank.life2);
+        this.player1Angle.push(json.game.tank.angle1);
+        this.player2Angle.push(json.game.tank.angle2);
+        this.player1pos.push(json.game.player1.posx, json.game.player1.posy);
+        this.player2pos.push(json.game.player2.posx, json.game.player2.posy);
         updatePositions(json);
+    }
+    map(json) {
+        this.mapfirstx.push(json.map[0][0] + 240); // get the x value out of the array of arrays, 0 -> +240 (scale)
+        this.mapfirsty.push(json.map[0][1] * 35); // get the y value out of the array of arrays, 10 -> *35 = 350 (scale
+        this.maplastx.push(json.map[json.map.length - 1][0] * 11); // ~100 -> *11 = 1100
+        this.maplasty.push(json.map[json.map.length - 1][1] * 10); // 10 -> *35 = 350
     }
 }
 
@@ -17,12 +40,12 @@ var isKeyDown=false;
 var speed=5;
 var ctx;
 
-var map = {
-    x:0,
-    y:0
-}
-
 let game = new Tank_Game();
+
+console.log(game.mapfirstx);
+console.log(game.mapfirsty);
+console.log(game.maplastx);
+console.log(game.maplasty);
 
 let tank_player1 = {
     Name: [],
@@ -137,6 +160,19 @@ function updateGame(direction) {
     });
 }
 
+function getMapCoordinates() {
+    $.ajax({
+        Method: "GET",
+        url: "/game/mapcoordinates",
+        datatype: "json",
+
+        success: function (result) {
+            console.log(result);
+            game.map(result);
+        }
+    });
+}
+
 
 // json to start the game
 function getGameJson() {
@@ -161,9 +197,9 @@ function updatePositions(json) {
 }
 
 // draw tanks and update positions
-let draw=function(){
+let draw = function(){
     ctx.clearRect(0,0,1100,600);
-    ctx.drawImage(img, tank_player1.x-tank_player1.dx, tank_player1.y-tank_player1.dy);
+    ctx.drawImage(img, tank_player1.x - tank_player1.dx, tank_player1.y - tank_player1.dy);
     flipHorizontally(img);
 }
 
@@ -181,26 +217,17 @@ function tankgame() {
     setInterval(draw,1);
 }
 
-/**
-// draw map, not finished yet
-let drawMapGerade = function () {
-    /**
-    ctx.beginPath();
-    ctx.fillStyle = 'black';
-    ctx.moveTo(map.x,map.y + 350)
-    ctx.lineTo(map.x + ctx.width, map.y + 350);
-    ctx.lineTo(map.x + ctx.width, map.y);
-    ctx.lineTo(map.x, map.y + ctx.height);
-    ctx.stroke();
-    ctx.closePath();
-    ctx.fill();
 
+// draw map using only the fist and the last value of the map array
+function drawMap(X1, Y1, X2, Y2) {
     ctx.beginPath();
-    ctx.fillStyle = "#b47d49"
-    ctx.fillRect(0,465,1050,200);
+    ctx.translate(X1, Y1)
+    ctx.moveTo(240, 350);
+    ctx.lineTo(X2, Y2);
     ctx.stroke();
+    ctx.restore();
 }
-*/
+
 var interval;
 function connectWebSocket() {
     var webSocket = new WebSocket("ws://localhost:9000/game/websocket");
@@ -232,11 +259,27 @@ function pushData() {
     let htmlplayer1 = [];
     let htmlplayer2 = [];
     htmlplayer1.push('<p>');
+    htmlplayer1.push('Name: ');
     htmlplayer1.push(game.Player1);
+    htmlplayer1.push('<br>');
+    htmlplayer1.push('Life: ');
+    htmlplayer1.push(game.player1Life);
+    htmlplayer1.push('<br>');
+    htmlplayer1.push('Angle: ');
+    htmlplayer1.push(game.player1Angle);
+    htmlplayer1.push('<br>');
     htmlplayer1.push('</p>')
 
     htmlplayer2.push('<p>');
+    htmlplayer2.push('Name: ');
     htmlplayer2.push(game.Player2);
+    htmlplayer2.push('<br>');
+    htmlplayer2.push('Life: ');
+    htmlplayer2.push(game.player2Life);
+    htmlplayer2.push('<br>');
+    htmlplayer2.push('Angle: ');
+    htmlplayer2.push(game.player2Angle);
+    htmlplayer2.push('<br>');
     htmlplayer2.push('</p>')
 
     console.log(game.Player1);
@@ -296,6 +339,8 @@ function getdata(){
 $(document).ready(function() {
     connectWebSocket();
     tankgame();
+    getMapCoordinates();
+    drawMap(game.mapfirstx, game.mapfirsty, game.maplastx, game.maplasty);
 });
 
 

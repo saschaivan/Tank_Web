@@ -25,16 +25,20 @@ class TankController @Inject()(cc: ControllerComponents)(implicit System: ActorS
   val injector = Guice.createInjector(new TankModule)
   val gamecontroller = injector.getInstance(classOf[ControllerInterface])
   val fileIO = new FileIO
-  gamecontroller.setGame("", 0, "small", "Sascha", "Yue")
-  gamecontroller.publish(new NewGame)
-  val game = gamecontroller.getGame
-  Map.activePlayer = Map.p1
+  var game = gamecontroller.getGame
+  var mapcoordinates = Map.getFXList(true);
 
   def setParameter = {
     var player1 = Map.getPlayer(1)
     var player2 = Map.getPlayer(2)
     player1.pos = Position(240, 350)
     player2.pos = Position(1100, 350)
+  }
+
+  def startGame(): Unit = {
+    gamecontroller.setGame("", 0, "small", "Sascha", "Yue")
+    gamecontroller.publish(new NewGame)
+    Map.activePlayer = Map.p1
   }
 
   def menu = Action {
@@ -50,7 +54,12 @@ class TankController @Inject()(cc: ControllerComponents)(implicit System: ActorS
   }
 
   def tank = Action {
+    startGame()
     Ok(views.html.tank(gamecontroller))
+  }
+
+  def sendMapCoordinates() = Action {
+    Ok(Json.obj("map" -> mapcoordinates))
   }
 
   def moveLeft = Action {

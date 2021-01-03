@@ -26,32 +26,28 @@
                             <li>
                                 <a class="nav-link" href="/controls">Controls</a>
                             </li>
+                            <li>
+                                <a class="nav-link" href="/">Restart</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </nav>
             <div id="container">
-                <div class="row">
-                    <div class="col-xl-9 game">
-                        <div id="player1">
-                            <!-- wird durch tank.js gefüllt -->
-
-                        </div>
-                        <div id="player2">
-                            <!-- wird durch tank.js gefüllt -->
-                        </div>
-                        <div class="map">
-                            <canvas id="canvas" width="1100" height="600"></canvas>
-                        </div>
-                        <div class="col-9 gameplay_buttons">
-                            <div class="row">
-                                <button type="sumbit" onclick="moveRight()" >Right</button>
-                            </div>
-                            <div class="row">
-                                <button type="sumbit" onclick="moveLeft()" >Left</button>
-                            </div>
-                        </div>
+                <div id="player1">
+                    <!-- wird durch tank.js gefüllt -->
+                </div>
+                <div class="col-xl-9 game">
+                    <div class="map">
+                        <canvas id="canvas" width="1100" height="600"></canvas>
                     </div>
+                    <div class="col-9 gameplay_buttons">
+                        <button type="sumbit" onclick="moveLeft()" >Left</button>
+                        <button type="sumbit" onclick="moveRight()" >Right</button>
+                    </div>
+                </div>
+                <div id="player2">
+                    <!-- wird durch tank.js gefüllt -->
                 </div>
             </div>
         </body>
