@@ -29,10 +29,12 @@ class Tank_Game {
         updatePositions(json);
     }
     map(json) {
-        this.mapfirstx.push(json.map[0][0] + 240); // get the x value out of the array of arrays, 0 -> +240 (scale)
-        this.mapfirsty.push(json.map[0][1] * 35); // get the y value out of the array of arrays, 10 -> *35 = 350 (scale
-        this.maplastx.push(json.map[json.map.length - 1][0] * 11); // ~100 -> *11 = 1100
-        this.maplasty.push(json.map[json.map.length - 1][1] * 35); // 10 -> *35 = 350
+        for (let i = 0; i < json.map.length - 1; i++) {
+            this.mapfirstx.push(json.map[i][0] + 240); // get the x value out of the array of arrays, 0 -> +240 (scale)
+            this.mapfirsty.push(json.map[i][1] * 35); // get the y value out of the array of arrays, 10 -> *35 = 350 (scale)
+        }
+        this.maplastx.push(json.map[json.map.length - 1][0] * 11); // ~100 -> 1100 (11)
+        this.maplasty.push(json.map[json.map.length - 1][1] * 35); // 10 -> 350 (35)
     }
 }
 
@@ -44,8 +46,8 @@ let game = new Tank_Game();
 
 console.log(game.mapfirstx);
 console.log(game.mapfirsty);
-console.log(game.maplastx);
-console.log(game.maplasty);
+//console.log(game.maplastx);
+//console.log(game.maplasty);
 
 let tank_player1 = {
     Name: [],
@@ -65,8 +67,8 @@ let tank_player2 = {
 
 let i=1;
 
-let img=new Image();
-img.src="assets/images/tank_icon.png";
+let img = new Image();
+img.src = "assets/images/tank_icon.png";
 img.id = "tank";
 
 window.addEventListener("keydown", onKeyDown, false);
@@ -173,7 +175,6 @@ function getMapCoordinates() {
     });
 }
 
-
 // json to start the game
 function getGameJson() {
     $.ajax({
@@ -189,6 +190,7 @@ function getGameJson() {
     });
 }
 
+// draw tanks and update positions
 function updatePositions(json) {
     tank_player1.x = json.game.player1.posx * 16; // ~15 -> 240 (16)
     tank_player1.y = json.game.player1.posy * 32; // ~11 -> 350 (32)
@@ -196,11 +198,11 @@ function updatePositions(json) {
     tank_player2.y = json.game.player2.posy * 39; // ~9 -> 350 (39)
 }
 
-// draw tanks and update positions
-let draw = function() {
+function draw(X1, Y1, X2, Y2) {
     ctx.clearRect(0,0,1100,600);
     ctx.drawImage(img, tank_player1.x - tank_player1.dx, tank_player1.y - tank_player1.dy);
     flipHorizontally(img);
+    drawMap(X1, Y1, X2, Y2);
 }
 
 function flipHorizontally(img) {
@@ -210,25 +212,23 @@ function flipHorizontally(img) {
     ctx.setTransform(1,0,0,1,0,0);
 }
 
+// draw map using only the fist and the last value of the map array
+function drawMap (X1, Y1, X2, Y2) {
+    ctx.beginPath();
+    ctx.moveTo(X1, Y1);
+    ctx.lineTo(X2, Y2);
+    ctx.stroke();
+}
+
+// game setup
 function tankgame() {
     // returns a html DOM object, without '[0]' its an jquery object
     getGameJson();
     ctx = $("#canvas")[0].getContext("2d");
-    setInterval(draw,1);
-    //setInterval(function() { drawMap(game.mapfirstx, game.mapfirsty, game.maplastx, game.maplasty); },1);
+    setInterval(function (){ draw(game.mapfirstx[0], game.mapfirsty[0], game.maplastx, game.maplasty); }, 1);
 }
 
-
-// draw map using only the fist and the last value of the map array
-function drawMap (X1, Y1, X2, Y2) {
-    ctx.beginPath();
-    ctx.translate(X1, Y1)
-    ctx.moveTo(240, 350);
-    ctx.lineTo(X2, Y2);
-    ctx.stroke();
-    ctx.restore();
-}
-
+// websocket
 var interval;
 function connectWebSocket() {
     var webSocket = new WebSocket("ws://localhost:9000/game/websocket");
@@ -255,7 +255,7 @@ function connectWebSocket() {
     }
 }
 
-
+// player data print to screen
 function pushData() {
     let htmlplayer1 = [];
     let htmlplayer2 = [];
@@ -337,6 +337,7 @@ function getdata(){
 }
 */
 
+// start everything
 $(document).ready(function() {
     connectWebSocket();
     tankgame();
