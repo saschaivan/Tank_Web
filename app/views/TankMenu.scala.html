@@ -15,20 +15,21 @@
                         </h1>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-4 center-block Name_and_Map">
                         <form action="" method="get">
-                            <div class="row">
+                            <div id="vue" class="row">
+                                <!--
                                 <div class="input-group mb-3 input-name">
-                                    <form id="data_player1">
-                                        <input id="player1_name" type="text" class="form-control" placeholder="SPIELER 1">
-                                    </form>
-                                    <form id="data_player2">
-                                        <input id="player2_name" type="text" class="form-control" placeholder="SPIELER 2">
-                                    </form>
+                                    <div id="data_player1">
+                                        <input v-model="player1" id="player1_name" type="text" class="form-control" placeholder="SPIELER 1">
+                                    </div>
+                                    <div id="data_player2">
+                                        <input v-model="player2" id="player2_name" type="text" class="form-control" placeholder="SPIELER 2">
+                                    </div>
                                 </div>
-
+                                -->
+                                <player-name></player-name>
                                 <div class="col-md-2 dropdown">
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="map"
                                     id="dropdownMenuButton" data-toggle="dropdown">
@@ -39,6 +40,7 @@
                                         <li>Gerade</li>
                                         <li>Sägezahnhügel</li>
                                     </ul>
+                                    <!--
                                     <script>
                                         var list = document.getElementById("mapvalue").getElementsByTagName("li");
                                         for (i=0;i<list.length;i++) {
@@ -48,6 +50,7 @@
                                             }
                                         }
                                     </script>
+                                    -->
                                 </div>
                             </div>
                         </form>

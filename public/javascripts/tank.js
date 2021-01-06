@@ -156,7 +156,7 @@ function updateGame(direction) {
         datatype: "json",
 
         success: function (update) {
-            console.log(update);
+            //console.log(update);
             game.fill(update);
         }
     });
@@ -169,7 +169,7 @@ function getMapCoordinates() {
         datatype: "json",
 
         success: function (result) {
-            console.log(result);
+            //console.log(result);
             game.map(result);
         }
     });
@@ -183,7 +183,7 @@ function getGameJson() {
         datatype: "json",
 
         success: function (update) {
-            console.log(update)
+            //console.log(update)
             game.fill(update);
             pushData();
         }
@@ -220,20 +220,20 @@ function drawMap (X1, Y1, X2, Y2) {
     ctx.stroke();
 }
 
+
 // game setup
 function tankgame() {
     // returns a html DOM object, without '[0]' its an jquery object
     getGameJson();
     ctx = $("#canvas")[0].getContext("2d");
     setInterval(function (){ draw(game.mapfirstx[0], game.mapfirsty[0], game.maplastx, game.maplasty); }, 1);
+    //draw(game.mapfirstx[0], game.mapfirsty[0], game.maplastx, game.maplasty);
 }
 
 // websocket
 var interval;
 function connectWebSocket() {
     var webSocket = new WebSocket("ws://localhost:9000/game/websocket");
-
-    //webSocket.setTimeout
 
     webSocket.onopen = function(event) {
         console.log("Connected to Websocket");
@@ -252,7 +252,13 @@ function connectWebSocket() {
 
     webSocket.onmessage = function (e) {
         console.log(e);
+        webSocketMessage(e);
     }
+}
+
+function webSocketMessage(message) {
+    const data = JSON.parse(message.data);
+    game.fill(data);
 }
 
 // player data print to screen
@@ -343,6 +349,4 @@ $(document).ready(function() {
     tankgame();
     getMapCoordinates();
 });
-
-
 
