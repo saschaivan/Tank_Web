@@ -1,23 +1,23 @@
 {
   "game" : {
     "partyname" : "",
-    "mapNo" : 1,
+    "mapNo" : 0,
     "size" : "small",
     "map" : {
       "activePlayer_id" : 1,
       "moves" : 10
     },
     "player1" : {
-      "name" : "",
+      "name" : "Sascha",
       "id" : 1,
-      "posx" : 1.9039846217792373,
-      "posy" : 10
+      "posx" : 20.725837470544704,
+      "posy" : 11.383621127723838
     },
     "player2" : {
-      "name" : "",
+      "name" : "Yue",
       "id" : 2,
-      "posx" : 0,
-      "posy" : 10
+      "posx" : 82.67009661415634,
+      "posy" : 11.579548100816499
     },
     "tank" : {
       "life1" : 100,

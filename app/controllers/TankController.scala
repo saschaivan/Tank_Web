@@ -26,6 +26,7 @@ class TankController @Inject()(cc: ControllerComponents)(implicit System: ActorS
   val gamecontroller = injector.getInstance(classOf[ControllerInterface])
   val fileIO = new FileIO
   var game = gamecontroller.getGame
+  Map.setFX(Option(0));
   var mapcoordinates = Map.getFXList(true);
 
   def setParameter = {

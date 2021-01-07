@@ -44,6 +44,7 @@ var ctx;
 
 let game = new Tank_Game();
 
+console.log(game.Player1)
 console.log(game.mapfirstx);
 console.log(game.mapfirsty);
 //console.log(game.maplastx);
@@ -192,6 +193,7 @@ function getMapCoordinates() {
         datatype: "json",
 
         success: function (result) {
+            console.log(result);
             //console.log(result);
             game.map(result);
         }
@@ -257,11 +259,6 @@ function tankgame() {
         console.log("hi");
         ctx.drawImage(mapGerade, 0, 0);
     }
-
-    setInterval(draw,1);
-    //setInterval(drawMapGerade,1);
-
-
 }
 
 // websocket
@@ -288,8 +285,13 @@ function connectWebSocket() {
 
     webSocket.onmessage = function (e) {
         console.log(e);
-        game.fill(e);
+        webSocketMessage(e);
     }
+}
+
+function webSocketMessage(message) {
+    let data = JSON.parse(message.data);
+    game.fill(data);
 }
 
 // player data print to screen
@@ -298,25 +300,25 @@ function pushData() {
     let htmlplayer2 = [];
     htmlplayer1.push('<p>');
     htmlplayer1.push('Name: ');
-    htmlplayer1.push(game.Player1);
+    htmlplayer1.push(game.Player1[0]);
     htmlplayer1.push('<br>');
     htmlplayer1.push('Life: ');
-    htmlplayer1.push(game.player1Life);
+    htmlplayer1.push(game.player1Life[0]);
     htmlplayer1.push('<br>');
     htmlplayer1.push('Angle: ');
-    htmlplayer1.push(game.player1Angle);
+    htmlplayer1.push(game.player1Angle[0]);
     htmlplayer1.push('<br>');
     htmlplayer1.push('</p>')
 
     htmlplayer2.push('<p>');
     htmlplayer2.push('Name: ');
-    htmlplayer2.push(game.Player2);
+    htmlplayer2.push(game.Player2[0]);
     htmlplayer2.push('<br>');
     htmlplayer2.push('Life: ');
-    htmlplayer2.push(game.player2Life);
+    htmlplayer2.push(game.player2Life[0]);
     htmlplayer2.push('<br>');
     htmlplayer2.push('Angle: ');
-    htmlplayer2.push(game.player2Angle);
+    htmlplayer2.push(game.player2Angle[0]);
     htmlplayer2.push('<br>');
     htmlplayer2.push('</p>')
 
