@@ -65,19 +65,42 @@ let tank_player2 = {
     dy:-50
 }
 
+function updatePosition(json) {
+    tank_player1.x = json.game.player1.posx;
+    tank_player1.y = json.game.player1.posy;
+}
+
 let i=1;
 
 let img = new Image();
 img.src = "assets/images/tank_icon.png";
 img.id = "tank";
 
+let mapGerade= new Image();
+mapGerade.src="assets/images/hintergrundgerade.png";
+mapGerade.id = "mapGerade";
+
+let mapSin = new Image();
+mapSin.src="assets/images/hintergrundsin.png";
+mapSin.id="mapSin";
+
+let mapSaege = new Image();
+mapSaege.src="assets/images/mapzahnpng.png";
+mapSaege.id="mapSaege";
+
+// tank movement
+// add eventlistener
 window.addEventListener("keydown", onKeyDown, false);
 window.addEventListener("keyup", onKeyUp, false);
 
+var keyW = false;
 var keyA = false;
+var keyS = false;
 var keyD = false;
 var keyLeft = false;
 var keyRight = false;
+var keyDown = false;
+var keyUP = false;
 
 // tank movement
 function onKeyDown(event) {
@@ -226,6 +249,19 @@ function tankgame() {
     getGameJson();
     ctx = $("#canvas")[0].getContext("2d");
     setInterval(function (){ draw(game.mapfirstx[0], game.mapfirsty[0], game.maplastx, game.maplasty); }, 1);
+    console.log(localStorage);
+    var mapid = localStorage.getItem("mapvalue");
+    console.log(mapid);
+
+    if(mapid == 3){
+        console.log("hi");
+        ctx.drawImage(mapGerade, 0, 0);
+    }
+
+    setInterval(draw,1);
+    //setInterval(drawMapGerade,1);
+
+
 }
 
 // websocket
@@ -252,6 +288,7 @@ function connectWebSocket() {
 
     webSocket.onmessage = function (e) {
         console.log(e);
+        game.fill(e);
     }
 }
 
@@ -300,17 +337,6 @@ function aboutPage() {
 
 /**
 //hier get the login map data.
-var localStorage = window.localStorage;
-
-function getLogin() {
-    gamePage();
-    var player1 = $("#player1_name").val();
-    var player2 = $("#player2_name").val();
-    var map = $("#map").val();
-    localStorage.setItem("mapvalue", map);
-    localStorage.setItem("player1", player1);
-    localStorage.setItem("player2", player2);
-}
 
 function getLoginJson(){
     $.ajax({
@@ -342,6 +368,7 @@ $(document).ready(function() {
     connectWebSocket();
     tankgame();
     getMapCoordinates();
+    getGameJson();
 });
 
 
