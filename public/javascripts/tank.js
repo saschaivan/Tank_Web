@@ -181,7 +181,7 @@ function updateGame(direction) {
 
         success: function (update) {
             //console.log(update);
-            game.fill(update);
+            updatePositions(update);
         }
     });
 }
@@ -193,8 +193,6 @@ function getMapCoordinates() {
         datatype: "json",
 
         success: function (result) {
-            console.log(result);
-            //console.log(result);
             game.map(result);
         }
     });
@@ -208,7 +206,6 @@ function getGameJson() {
         datatype: "json",
 
         success: function (update) {
-            //console.log(update)
             game.fill(update);
             pushData();
         }
@@ -248,7 +245,7 @@ function drawMap (X1, Y1, X2, Y2) {
 // game setup
 function tankgame() {
     // returns a html DOM object, without '[0]' its an jquery object
-    getGameJson();
+    //getGameJson();
     ctx = $("#canvas")[0].getContext("2d");
     setInterval(function (){ draw(game.mapfirstx[0], game.mapfirsty[0], game.maplastx, game.maplasty); }, 1);
     console.log(localStorage);
@@ -300,29 +297,27 @@ function pushData() {
     let htmlplayer2 = [];
     htmlplayer1.push('<p>');
     htmlplayer1.push('Name: ');
-    htmlplayer1.push(game.Player1[0]);
+    htmlplayer1.push(game.Player1);
     htmlplayer1.push('<br>');
     htmlplayer1.push('Life: ');
-    htmlplayer1.push(game.player1Life[0]);
+    htmlplayer1.push(game.player1Life);
     htmlplayer1.push('<br>');
     htmlplayer1.push('Angle: ');
-    htmlplayer1.push(game.player1Angle[0]);
+    htmlplayer1.push(game.player1Angle);
     htmlplayer1.push('<br>');
     htmlplayer1.push('</p>')
 
     htmlplayer2.push('<p>');
     htmlplayer2.push('Name: ');
-    htmlplayer2.push(game.Player2[0]);
+    htmlplayer2.push(game.Player2);
     htmlplayer2.push('<br>');
     htmlplayer2.push('Life: ');
-    htmlplayer2.push(game.player2Life[0]);
+    htmlplayer2.push(game.player2Life);
     htmlplayer2.push('<br>');
     htmlplayer2.push('Angle: ');
-    htmlplayer2.push(game.player2Angle[0]);
+    htmlplayer2.push(game.player2Angle);
     htmlplayer2.push('<br>');
     htmlplayer2.push('</p>')
-
-    console.log(game.Player1);
 
     $("#player1").html(htmlplayer1.join(''));
     $("#player2").html(htmlplayer2.join(''));

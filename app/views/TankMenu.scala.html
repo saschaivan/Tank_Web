@@ -41,22 +41,21 @@
                                         <li>Gerade</li>
                                         <li>Sägezahnhügel</li>
                                     </ul>
-                                    <!--
-                                    <script>
-                                        var list = document.getElementById("mapvalue").getElementsByTagName("li");
-                                        for (i=0;i<list.length;i++) {
-                                            list[i].onclick = function (){
-                                                $("#map").html(this.innerHTML);
-                                                $("#map").val(i);
-                                            }
-                                        }
-                                    </script>
-                                    -->
+
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
+                <script>
+                        var list = document.getElementById("mapvalue").getElementsByTagName("li");
+                        for (i=0;i<list.length;i++) {
+                            list[i].onclick = function (){
+                                $("#map").html(this.innerHTML);
+                                $("#map").val(i);
+                            }
+                        }
+                </script>
                 <div class="buttons">
                     <div class="row">
                         <button id="startbutton" class="menubutton" type="sumbit" onclick="gamePage()" >Start</button>
