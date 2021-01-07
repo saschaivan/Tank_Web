@@ -179,7 +179,7 @@ function updateGame(direction) {
         datatype: "json",
 
         success: function (update) {
-            console.log(update);
+            //console.log(update);
             game.fill(update);
         }
     });
@@ -192,7 +192,7 @@ function getMapCoordinates() {
         datatype: "json",
 
         success: function (result) {
-            console.log(result);
+            //console.log(result);
             game.map(result);
         }
     });
@@ -206,7 +206,7 @@ function getGameJson() {
         datatype: "json",
 
         success: function (update) {
-            console.log(update)
+            //console.log(update)
             game.fill(update);
             pushData();
         }
@@ -337,6 +337,17 @@ function aboutPage() {
 
 /**
 //hier get the login map data.
+var localStorage = window.localStorage;
+
+function getLogin() {
+    gamePage();
+    var player1 = $("#player1_name").val();
+    var player2 = $("#player2_name").val();
+    var map = $("#map").val();
+    localStorage.setItem("mapvalue", map);
+    localStorage.setItem("player1", player1);
+    localStorage.setItem("player2", player2);
+}
 
 function getLoginJson(){
     $.ajax({
