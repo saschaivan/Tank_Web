@@ -94,14 +94,10 @@ mapSaege.id="mapSaege";
 window.addEventListener("keydown", onKeyDown, false);
 window.addEventListener("keyup", onKeyUp, false);
 
-var keyW = false;
 var keyA = false;
-var keyS = false;
 var keyD = false;
 var keyLeft = false;
 var keyRight = false;
-var keyDown = false;
-var keyUP = false;
 
 // tank movement
 function onKeyDown(event) {
@@ -260,6 +256,13 @@ function tankgame() {
 
 // websocket
 var interval;
+let obj = {
+    playerdata: {
+        player1: game.Player1,
+        player2: game.player2
+    }
+}
+console.log(JSON.parse(JSON.stringify(obj)));
 function connectWebSocket() {
     var webSocket = new WebSocket("ws://localhost:9000/game/websocket");
 
@@ -267,6 +270,7 @@ function connectWebSocket() {
 
     webSocket.onopen = function(event) {
         console.log("Connected to Websocket");
+        //webSocket.send(JSON.parse(JSON.stringify(obj)));
         interval = setInterval(function() {
             webSocket.send(JSON.stringify("ping"));
         }, 5000);
@@ -374,7 +378,7 @@ function getdata(){
 // start everything
 $(document).ready(function() {
     connectWebSocket();
-    tankgame();
+    //tankgame();
     getMapCoordinates();
     getGameJson();
 });
