@@ -26,17 +26,10 @@ Vue.component('player-name', {
 
 Vue.component('game', {
     template:`
-    <div id="test" v-if="load">
-        <canvas id="mycanvas" width="1100" height="600" @mouseover="tankGame"></canvas>
-    </div>
+    <button v-on:click="tankGame()">Start</button>
     `,
     data : {
         canvas: null
-    },
-    data() {
-        return {
-            load: true
-        }
     },
     mounted() {
         let c = $('#mycanvas')[0].getContext('2d');
