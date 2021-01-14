@@ -66,11 +66,6 @@ let tank_player2 = {
     dy:-50
 }
 
-function updatePosition(json) {
-    tank_player1.x = json.game.player1.posx;
-    tank_player1.y = json.game.player1.posy;
-}
-
 let i=1;
 
 let img = new Image();
@@ -202,6 +197,7 @@ function getGameJson() {
         datatype: "json",
 
         success: function (update) {
+            console.log(update);
             game.fill(update);
             pushData();
         }

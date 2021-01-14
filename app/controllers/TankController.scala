@@ -24,6 +24,9 @@ import play.api.libs.json.{JsValue, Json}
 class TankController @Inject()(cc: ControllerComponents)(implicit System: ActorSystem, mat:Materializer) extends AbstractController(cc) {
   val injector = Guice.createInjector(new TankModule)
   val gamecontroller = injector.getInstance(classOf[ControllerInterface])
+  gamecontroller.setGame("", 0, "small", "Sascha", "Yue")
+  gamecontroller.publish(new NewGame)
+  Map.activePlayer = Map.p1
   val fileIO = new FileIO
   var game = gamecontroller.getGame
   Map.setFX(Option(0));
@@ -55,7 +58,7 @@ class TankController @Inject()(cc: ControllerComponents)(implicit System: ActorS
   }
 
   def tank = Action {
-    startGame()
+    //startGame()
     Ok(views.html.tank(gamecontroller))
   }
 
