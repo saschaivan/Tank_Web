@@ -20,8 +20,14 @@ import akka.actor._
 import play.api.Play.materializer
 import play.api.libs.json.{JsValue, Json}
 
+import scala.collection.mutable.ListBuffer
+
 @Singleton
 class TankController @Inject()(cc: ControllerComponents)(implicit System: ActorSystem, mat:Materializer) extends AbstractController(cc) {
+  final val WIDTH: Double = 1000
+  final val HEIGHT: Double = 600
+  final val XScale: Double = WIDTH / Map.endOfMap._1
+  final val YScale: Double = HEIGHT / Map.endOfMap._2
   val injector = Guice.createInjector(new TankModule)
   val gamecontroller = injector.getInstance(classOf[ControllerInterface])
   gamecontroller.setGame("", 0, "small", "Sascha", "Yue")
@@ -29,8 +35,20 @@ class TankController @Inject()(cc: ControllerComponents)(implicit System: ActorS
   Map.activePlayer = Map.p1
   val fileIO = new FileIO
   var game = gamecontroller.getGame
-  Map.setFX(Option(0));
-  var mapcoordinates = Map.getFXList(true);
+  Map.setFX(Option(0))
+  var d: List[(Double, Double)] = Map.getFXList(true);
+  var mapcoordinates = getScale(d).toBuffer
+  var posupdate = getPos(Map.p1.pos)
+
+  def getScale(d:List[(Double, Double)]): List[Double] = {
+    var l: ListBuffer[Double] = ListBuffer.empty
+    d.foreach(d => l.append(d._1 * XScale, (Map.endOfMap._2 - d._2) * YScale))
+    l.toList
+  }
+
+  def getPos(value: Position): ((Double), (Double)) = {
+    (value.x * XScale, (Map.endOfMap._2 - value.y) * YScale)
+  }
 
   def setParameter = {
     var player1 = Map.getPlayer(1)
@@ -60,6 +78,10 @@ class TankController @Inject()(cc: ControllerComponents)(implicit System: ActorS
   def tank = Action {
     //startGame()
     Ok(views.html.tank(gamecontroller))
+  }
+
+  def sendPosUpdate() = Action {
+    Ok(Json.obj("update" -> posupdate))
   }
 
   def sendMapCoordinates() = Action {

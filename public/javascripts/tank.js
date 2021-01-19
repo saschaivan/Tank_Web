@@ -10,10 +10,8 @@ class Tank_Game {
         this.player2Angle = [];
         this.activePlayer = [];
         this.numberofmoves = [];
-        this.mapfirstx = [];
-        this.mapfirsty = [];
-        this.maplastx = [];
-        this.maplasty = [];
+        this.mapx = [];
+        this.mapy = [];
     }
     fill(json) {
         this.Player1.push(json.game.player1.name);
@@ -28,13 +26,19 @@ class Tank_Game {
         this.player2pos.push(json.game.player2.posx, json.game.player2.posy);
         updatePositions(json);
     }
+    fillupdate(json) {
+        console.log(json);
+        tank_player1.x = json[0];
+        tank_player1.y = json[1];
+    }
     map(json) {
-        for (let i = 0; i < json.map.length - 1; i++) {
-            this.mapfirstx.push(json.map[i][0] + 240); // get the x value out of the array of arrays, 0 -> +240 (scale)
-            this.mapfirsty.push(json.map[i][1] * 35); // get the y value out of the array of arrays, 10 -> *35 = 350 (scale)
+        console.log(json);
+        let i = 0;
+        while(i < json.map.length - 1) {
+            this.mapx.push(json.map[i]); // get the x value out of the array of arrays, 0 -> +240 (scale)
+            this.mapy.push(json.map[i + 1]); // get the y value out of the array of arrays, 10 -> *35 = 350 (scale)
+            i += 2;
         }
-        this.maplastx.push(json.map[json.map.length - 1][0] * 11); // ~100 -> 1100 (11)
-        this.maplasty.push(json.map[json.map.length - 1][1] * 35); // 10 -> 350 (35)
     }
 }
 
@@ -43,12 +47,6 @@ var speed=5;
 var ctx;
 
 let game = new Tank_Game();
-
-console.log(game.Player1)
-console.log(game.mapfirstx);
-console.log(game.mapfirsty);
-//console.log(game.maplastx);
-//console.log(game.maplasty);
 
 let tank_player1 = {
     Name: [],
@@ -177,6 +175,19 @@ function updateGame(direction) {
     });
 }
 
+function getPos() {
+    $.ajax({
+        Method: "GET",
+        url: "/game/posupdate",
+        datatype: "json",
+
+        success: function (update) {
+            //console.log(update);
+            game.fillupdate(update);
+        }
+    });
+}
+
 function getMapCoordinates() {
     $.ajax({
         Method: "GET",
@@ -197,7 +208,7 @@ function getGameJson() {
         datatype: "json",
 
         success: function (update) {
-            console.log(update);
+            //console.log(update);
             game.fill(update);
             pushData();
         }
@@ -239,15 +250,13 @@ function tankgame() {
     // returns a html DOM object, without '[0]' its an jquery object
     //getGameJson();
     ctx = $("#canvas")[0].getContext("2d");
-    setInterval(function (){ draw(game.mapfirstx[0], game.mapfirsty[0], game.maplastx, game.maplasty); }, 1);
-    console.log(localStorage);
-    var mapid = localStorage.getItem("mapvalue");
-    console.log(mapid);
-
-    if(mapid == 3){
-        console.log("hi");
-        ctx.drawImage(mapGerade, 0, 0);
-    }
+    //console.log(game.mapx);
+    //console.log(game.mapy);
+    setInterval(function (){
+        for(let i = 0; i < game.mapx.length - 1; i++) {
+            draw(game.mapx[i], game.mapy[i], game.mapx[i + 1], game.mapy[i + 1]);
+        }
+        }, 1);
 }
 
 // websocket
@@ -258,7 +267,7 @@ let obj = {
         player2: game.player2
     }
 }
-console.log(JSON.parse(JSON.stringify(obj)));
+//console.log(JSON.parse(JSON.stringify(obj)));
 function connectWebSocket() {
     var webSocket = new WebSocket("ws://localhost:9000/game/websocket");
 
@@ -375,6 +384,7 @@ function getdata(){
 $(document).ready(function() {
     connectWebSocket();
     //tankgame();
+    //getPos();
     getMapCoordinates();
     getGameJson();
 });

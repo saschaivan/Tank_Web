@@ -39,14 +39,19 @@ Vue.component('game', {
     methods: {
         tankGame: function () {
             setInterval(() => {
-                this.drawGame(game.mapfirstx[0], game.mapfirsty[0], game.maplastx, game.maplasty)
+                this.drawGame(game.mapx, game.mapy, game.mapx, game.mapy)
             }, 1);
         },
         drawGame: function (X1, Y1, X2, Y2) {
             this.ctx1.clearRect(0,0,1100,600);
             this.ctx1.drawImage(img, tank_player1.x - tank_player1.dx, tank_player1.y - tank_player1.dy);
             this.flip(img);
-            this.drawing(X1, Y1, X2, Y2);
+            let i = 0;
+            while(i < game.mapx.length - 1) {
+                //console.log(X1[i]);
+                this.drawing(X1[i], Y1[i], X2[i + 1], Y2[i + 1]);
+                i += 2;
+            }
         },
         flip(img) {
             this.ctx1.translate(tank_player2.x-tank_player2.dx, tank_player2.y-tank_player2.dy);
