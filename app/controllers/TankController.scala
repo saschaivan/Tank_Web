@@ -1,26 +1,20 @@
 package controllers
 
-import akka.actor.{Actor, ActorRef}
-import com.google.inject.{Guice, Inject}
-import de.htwg.se.Tank.controller.controllerComponent.{ControllerInterface, Fire, Hit, NewGame, UpdateMap}
-import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents, WebSocket}
-import de.htwg.se.Tank.{Tank, TankModule, controller}
-import de.htwg.se.Tank.model.gameComponent.gameBase.Map
-import javax.inject.Singleton
-import de.htwg.se.Tank.model.fileIoComponent.fileIoJsonImpl.FileIO
-import de.htwg.se.Tank.model.playerComponent.playerBase.{Player, Position}
-import play.api.libs.streams.ActorFlow
-import play.twirl.api.HtmlFormat
-import views.html.TankMenu
-
-import scala.swing.Reactor
-import akka.actor.{ActorRefFactory, ActorSystem}
+import akka.actor.{Actor, ActorRef, ActorSystem, _}
 import akka.stream.Materializer
-import akka.actor._
-import play.api.Play.materializer
+import com.google.inject.{Guice, Inject}
+import de.htwg.se.Tank.TankModule
+import de.htwg.se.Tank.controller.controllerComponent._
+import de.htwg.se.Tank.model.fileIoComponent.fileIoJsonImpl.FileIO
+import de.htwg.se.Tank.model.gameComponent.gameBase.Map
+import de.htwg.se.Tank.model.playerComponent.playerBase.Position
+import javax.inject.Singleton
 import play.api.libs.json.{JsValue, Json}
+import play.api.libs.streams.ActorFlow
+import play.api.mvc.{AbstractController, ControllerComponents, WebSocket}
 
 import scala.collection.mutable.ListBuffer
+import scala.swing.Reactor
 
 @Singleton
 class TankController @Inject()(cc: ControllerComponents)(implicit System: ActorSystem, mat:Materializer) extends AbstractController(cc) {
@@ -142,7 +136,7 @@ class TankController @Inject()(cc: ControllerComponents)(implicit System: ActorS
     Ok(views.html.tank(gamecontroller))
   }
 
-  def gameToJson() = Action {
+  def gameToJson = Action {
     gamecontroller.save
     Ok(fileIO.gameToJson(game))
   }
